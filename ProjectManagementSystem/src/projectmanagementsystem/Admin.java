@@ -29,10 +29,11 @@ public class Admin extends javax.swing.JFrame {
         AdminPageLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        RegisterBtn = new javax.swing.JButton();
+        BackBtn = new javax.swing.JButton();
+        ExitBtn = new javax.swing.JButton();
+        EditStudentBtn = new javax.swing.JButton();
+        EditLecturerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(846, 500));
@@ -45,31 +46,38 @@ public class Admin extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/projectmanagementsystem/Hiker_v1.png"))); // NOI18N
         jLabel2.setMaximumSize(new java.awt.Dimension(2041, 2000));
 
-        jButton11.setText("Register");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        RegisterBtn.setText("Register");
+        RegisterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                RegisterBtnActionPerformed(evt);
             }
         });
 
-        jButton10.setText("Back");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        BackBtn.setText("Back");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                BackBtnActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Exit");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        ExitBtn.setText("Exit");
+        ExitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                ExitBtnActionPerformed(evt);
             }
         });
 
-        jButton12.setText("Edit");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        EditStudentBtn.setText("Edit Student");
+        EditStudentBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                EditStudentBtnActionPerformed(evt);
+            }
+        });
+
+        EditLecturerBtn.setText("Edit Lecturer");
+        EditLecturerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditLecturerBtnActionPerformed(evt);
             }
         });
 
@@ -89,13 +97,16 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(RegisterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(EditStudentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(EditLecturerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -107,13 +118,15 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EditStudentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EditLecturerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(RegisterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ExitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,25 +136,32 @@ public class Admin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterBtnActionPerformed
         // TODO add your handling code here:
         Register register = new Register();
         register.setVisible(true);
         Admin.this.setVisible(false);
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_RegisterBtnActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_BackBtnActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_ExitBtnActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void EditStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditStudentBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+        EditStudent editstudent = new EditStudent();
+        editstudent.setVisible(true);
+        Admin.this.setVisible(false);
+    }//GEN-LAST:event_EditStudentBtnActionPerformed
+
+    private void EditLecturerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditLecturerBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditLecturerBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,10 +200,11 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AdminPageLabel;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton BackBtn;
+    private javax.swing.JButton EditLecturerBtn;
+    private javax.swing.JButton EditStudentBtn;
+    private javax.swing.JButton ExitBtn;
+    private javax.swing.JButton RegisterBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

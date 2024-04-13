@@ -1,8 +1,9 @@
-Username:josh
-Password:pokemon911
-Intake code: Not Assigned
 
 
-Username:Celes
+
+
+
+
+Username:celes
 Password:metagross816
 Intake code: Not Assigned

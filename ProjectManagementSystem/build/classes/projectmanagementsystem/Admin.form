@@ -41,15 +41,19 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton11" min="-2" pref="288" max="-2" attributes="0"/>
-                          <Component id="jButton12" min="-2" pref="288" max="-2" attributes="0"/>
+                          <Component id="RegisterBtn" min="-2" pref="288" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="EditStudentBtn" min="-2" pref="142" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="EditLecturerBtn" min="-2" pref="142" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                      <Component id="jButton10" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="BackBtn" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton6" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="ExitBtn" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="50" max="32767" attributes="0"/>
@@ -65,13 +69,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Component id="jButton12" min="-2" pref="40" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="EditStudentBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="EditLecturerBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton11" min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="RegisterBtn" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton10" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="jButton6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="BackBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="ExitBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
@@ -106,36 +113,44 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton11">
+    <Component class="javax.swing.JButton" name="RegisterBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Register"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton11ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RegisterBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton10">
+    <Component class="javax.swing.JButton" name="BackBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Back"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="ExitBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExitBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton12">
+    <Component class="javax.swing.JButton" name="EditStudentBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Edit"/>
+        <Property name="text" type="java.lang.String" value="Edit Student"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EditStudentBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="EditLecturerBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Edit Lecturer"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EditLecturerBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
