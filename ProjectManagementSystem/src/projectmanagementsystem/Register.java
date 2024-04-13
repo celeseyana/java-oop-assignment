@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
  */
 public class Register extends javax.swing.JFrame {
 
-
     /**
      * Creates new form Register
      */
@@ -29,7 +28,7 @@ public class Register extends javax.swing.JFrame {
         try {
             int ln = 0;
             RandomAccessFile raf = new RandomAccessFile("student.txt", "rw");
-            for(int i=0;raf.readLine()!=null;i++){
+            for (int i = 0; raf.readLine() != null; i++) {
                 ln++;
             }
             if (ln > 0) {
@@ -38,6 +37,9 @@ public class Register extends javax.swing.JFrame {
             }
             raf.writeBytes("Username:" + usr + "\r\n");
             raf.writeBytes("Password:" + pswd + "\r\n");
+            raf.writeBytes("""
+                           Intake code: Not Assigned\r
+                           """);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -49,7 +51,7 @@ public class Register extends javax.swing.JFrame {
         try {
             int ln = 0;
             RandomAccessFile raf = new RandomAccessFile("lecturer.txt", "rw");
-            for(int i=0;raf.readLine()!=null;i++){
+            for (int i = 0; raf.readLine() != null; i++) {
                 ln++;
             }
             if (ln > 0) {
@@ -58,14 +60,21 @@ public class Register extends javax.swing.JFrame {
             }
             raf.writeBytes("Username:" + usr + "\r\n");
             raf.writeBytes("Password:" + pswd + "\r\n");
+            raf.writeBytes("""
+                           Project Manager: false\r
+                           """);
+            raf.writeBytes("""
+                           Supervisor: false\r
+                           """);
+            raf.writeBytes("""
+                           Second Marker: false\r
+                           """);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,6 +135,11 @@ public class Register extends javax.swing.JFrame {
         });
 
         BackBtn.setText("Back");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
 
         ClearBtn.setText("Clear");
         ClearBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +240,18 @@ public class Register extends javax.swing.JFrame {
 
     private void ClearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearBtnActionPerformed
         // TODO add your handling code here:
+        StudentRadioBtn.setSelected(false);
+        LecturerRadioBtn.setSelected(false);
+        usrnameTF.setText("");
+        passwordTF.setText("");
     }//GEN-LAST:event_ClearBtnActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        Admin admin = new Admin();
+        admin.setVisible(true);
+        Register.this.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
 
     /**
      * @param args the command line arguments
