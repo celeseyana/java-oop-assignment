@@ -1,3 +1,0 @@
-test push 1
-
-laptop push test
