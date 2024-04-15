@@ -38,7 +38,7 @@ public class Register extends javax.swing.JFrame {
             raf.writeBytes("Username:" + usr + "\r\n");
             raf.writeBytes("Password:" + pswd + "\r\n");
             raf.writeBytes("""
-                           Intake code: Not Assigned\r
+                           Intake code:Not Assigned\r
                            """);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);

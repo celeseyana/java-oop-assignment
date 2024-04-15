@@ -28,6 +28,8 @@ public class EditStudent extends javax.swing.JFrame {
      */
     public EditStudent() {
         initComponents();
+        passwords = new ArrayList<>();
+        intakeCodes = new ArrayList<>();
         populateListFromFile("Student.txt");
     }
 
@@ -208,19 +210,25 @@ public class EditStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedIndex = fileList.getSelectedIndex();
         StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
+        StudentData.passwordToEdit = passwords.get(selectedIndex);
+        StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
+        System.out.println(StudentData.passwordToEdit);
+        System.out.println(StudentData.intakeToEdit);
         EditStudentDetails editstudentdetails = new EditStudentDetails();
         editstudentdetails.setVisible(true);
-        EditStudent.this.setVisible(false);
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = fileList.getSelectedIndex();
         if (selectedIndex != -1) {
-            StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
-            deleteLinesByUsername("Student.txt", StudentData.usernameToDelete);
-            JOptionPane.showMessageDialog(this, StudentData.usernameToDelete + "'s data has been deleted successfully!");
-            restartProgram();
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?");
+            if (option == JOptionPane.YES_OPTION) {
+                StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
+                deleteLinesByUsername("Student.txt", StudentData.usernameToDelete);
+                JOptionPane.showMessageDialog(this, StudentData.usernameToDelete + "'s data has been deleted successfully!");
+                restartProgram();
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Please select a username to delete.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -240,7 +248,7 @@ public class EditStudent extends javax.swing.JFrame {
 
     public static void deleteLinesByUsername(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -266,8 +274,8 @@ public class EditStudent extends javax.swing.JFrame {
 
     private void populateListFromFile(String filename) {
         ArrayList<String> usernames = new ArrayList<>();
-        ArrayList<String> passwords = new ArrayList<>();
-        ArrayList<String> intakeCodes = new ArrayList<>();
+        passwords = new ArrayList<>(); // Initialize passwords ArrayList
+        intakeCodes = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -277,15 +285,15 @@ public class EditStudent extends javax.swing.JFrame {
                 } else if (line.startsWith("Password:")) {
                     String password = line.substring("Password:".length()).trim();
                     passwords.add(password); // Store the password in the ArrayList
-                } else if (line.startsWith("Intake Code:")) {
-                    String intakeCode = line.substring("Intake Code:".length()).trim();
+                } else if (line.startsWith("Intake code:")) {
+                    String[] parts = line.split(":");
+                    String intakeCode = parts[1].trim();
                     intakeCodes.add(intakeCode);
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
-        
 
         // Convert ArrayList to array for JList
         final String[] usernamesArray = new String[usernames.size()];

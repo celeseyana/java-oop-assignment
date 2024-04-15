@@ -1,9 +1,3 @@
-
-
-
-
-
-
-Username:celes
-Password:metagross816
-Intake code: Not Assigned
+Username:josh
+Password:12345
+Intake code:Not Assigned

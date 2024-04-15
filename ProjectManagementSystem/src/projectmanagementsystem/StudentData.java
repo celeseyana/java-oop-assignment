@@ -10,6 +10,6 @@ package projectmanagementsystem;
  */
 public class StudentData {
         public static String usernameToDelete;
-        public static Object passwordToEdit;
-        public static Object intakeToEdit;
+        public static String passwordToEdit;
+        public static String intakeToEdit;
 }

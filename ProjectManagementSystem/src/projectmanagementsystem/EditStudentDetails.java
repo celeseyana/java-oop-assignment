@@ -35,7 +35,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         StudentNameTF = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        passwordTF = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -77,6 +77,11 @@ public class EditStudentDetails extends javax.swing.JFrame {
         jButton1.setText("Save");
 
         jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -94,7 +99,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField2))
+                    .addComponent(passwordTF))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
@@ -113,7 +118,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -153,9 +158,17 @@ public class EditStudentDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        EditStudentDetails.this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void loadStudentDetails(){
         String usernameToDelete = StudentData.usernameToDelete;
+        String passwordToEdit = StudentData.passwordToEdit;
         StudentNameTF.setText(usernameToDelete);
+        passwordTF.setText(passwordToEdit);
+        
     }
     
     /**
@@ -204,6 +217,6 @@ public class EditStudentDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField passwordTF;
     // End of variables declaration//GEN-END:variables
 }
