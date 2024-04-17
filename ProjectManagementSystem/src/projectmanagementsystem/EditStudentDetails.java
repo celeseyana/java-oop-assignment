@@ -4,8 +4,12 @@
  */
 package projectmanagementsystem;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -188,22 +192,54 @@ public class EditStudentDetails extends javax.swing.JFrame {
     }
 
     private void saveData(String usr, String pw, String intakeCode) {
-        try (RandomAccessFile raf = new RandomAccessFile("student.txt", "rw");) {
-            String line = null;
-            String selectedUsr = line.substring("Username:".length()).trim();
-            if (usernameToDelete.equalsIgnoreCase(selectedUsr)) {
-                
+        try (RandomAccessFile raf = new RandomAccessFile("student.txt", "rw")) {
+            StringBuilder newData = new StringBuilder();
+            String line;
+            while ((line = raf.readLine()) != null) {
+                String trimmedLine = line.trim(); // Trim the line for comparison
+                if (trimmedLine.startsWith("Username:") && trimmedLine.substring("Username:".length()).trim().equals(usernameToDelete)) {
+                    // Skip the next two lines (Password and Intake code) to delete previous data
+                    raf.readLine(); // Skip Password line
+                    raf.readLine(); // Skip Intake code line
+                    newData.append("Username:").append(usr).append("\nPassword:").append(pw).append("\nIntake code:").append(intakeCode).append("\n");
+                } else {
+                    newData.append(line).append("\n");
+                }
             }
+            raf.seek(0);
+            raf.writeBytes(newData.toString());
+            JOptionPane.showMessageDialog(EditStudentDetails.this, "Data Updated Successfully!");
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            System.err.println("Error reading or writing file: " + e.getMessage());
+        }
+
+        EditStudentDetails.this.setVisible(false);
+        Admin edt = new Admin();
+        edt.setVisible(true);
+
+    }
+
+    private void restartProgram() {
+        String javaHome = System.getProperty("java.home");
+        String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
+        String classpath = System.getProperty("java.class.path");
+        String className = EditStudentDetails.class
+                .getName();
+
+        ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
+
+        try {
+            builder.start();
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -215,27 +251,23 @@ public static void main(String args[]) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class  
+            java.util.logging.Logger.getLogger(EditStudentDetails.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(EditStudentDetails.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(EditStudentDetails.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(EditStudentDetails.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

@@ -209,11 +209,18 @@ public class EditStudent extends javax.swing.JFrame {
     private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = fileList.getSelectedIndex();
-        StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
-        StudentData.passwordToEdit = passwords.get(selectedIndex);
-        StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
-        EditStudentDetails editstudentdetails = new EditStudentDetails();
-        editstudentdetails.setVisible(true);
+        System.out.println(passwords);
+        if (selectedIndex >= 0 && selectedIndex < passwords.size()) {
+            // Proceed with your edit logic using StudentData.passwordToEdit
+            StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
+            StudentData.passwordToEdit = passwords.get(selectedIndex);
+            StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
+            EditStudentDetails editstudentdetails = new EditStudentDetails();
+            editstudentdetails.setVisible(true);
+        } else {
+            // Handle invalid selectedIndex, e.g., show an error message
+            System.err.println("Invalid selectedIndex: " + selectedIndex);
+        }
     }//GEN-LAST:event_EditBtnActionPerformed
 
     private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
