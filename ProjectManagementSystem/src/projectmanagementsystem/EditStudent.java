@@ -212,8 +212,6 @@ public class EditStudent extends javax.swing.JFrame {
         StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
         StudentData.passwordToEdit = passwords.get(selectedIndex);
         StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
-        System.out.println(StudentData.passwordToEdit);
-        System.out.println(StudentData.intakeToEdit);
         EditStudentDetails editstudentdetails = new EditStudentDetails();
         editstudentdetails.setVisible(true);
     }//GEN-LAST:event_EditBtnActionPerformed
