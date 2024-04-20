@@ -161,6 +161,9 @@ public class Admin extends javax.swing.JFrame {
 
     private void EditLecturerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditLecturerBtnActionPerformed
         // TODO add your handling code here:
+        EditLecturer editLecturer = new EditLecturer();
+        editLecturer.setVisible(true);
+        Admin.this.setVisible(false);
     }//GEN-LAST:event_EditLecturerBtnActionPerformed
 
     /**

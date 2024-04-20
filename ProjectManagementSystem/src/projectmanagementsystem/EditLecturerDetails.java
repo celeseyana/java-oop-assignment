@@ -15,18 +15,18 @@ import javax.swing.JOptionPane;
  *
  * @author Tioh
  */
-public class EditStudentDetails extends javax.swing.JFrame {
+public class EditLecturerDetails extends javax.swing.JFrame {
 
-    String usernameToDelete = StudentData.usernameToDelete;
-    String passwordToEdit = StudentData.passwordToEdit;
-    String intakeToEdit = StudentData.intakeToEdit;
+    String usernameToDelete = LecturerData.usernameToDelete;
+    String passwordToEdit = LecturerData.passwordToEdit;
+    String projectManagerStatus = LecturerData.projectManagerStatus;
 
     /**
      * Creates new form EditStudentDetails
      */
-    public EditStudentDetails() {
+    public EditLecturerDetails() {
         initComponents();
-        loadStudentDetails();
+        loadLecturerDetails();
     }
 
     /**
@@ -44,8 +44,8 @@ public class EditStudentDetails extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        IntakeCodeBox = new javax.swing.JComboBox<>();
-        StudentNameTF = new javax.swing.JTextField();
+        ProjectManagerBox = new javax.swing.JComboBox<>();
+        LecturerNameTF = new javax.swing.JTextField();
         passwordTF = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
@@ -53,7 +53,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Edit Student Details");
+        jLabel1.setText("Edit Lecturer Details");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -76,12 +76,12 @@ public class EditStudentDetails extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
-        jLabel4.setText("Intake Code:");
+        jLabel4.setText("Project Manager:");
 
-        IntakeCodeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Assigned", "UCDF2402", "UCDF2406", "UCDF2410" }));
-        IntakeCodeBox.addActionListener(new java.awt.event.ActionListener() {
+        ProjectManagerBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
+        ProjectManagerBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IntakeCodeBoxActionPerformed(evt);
+                ProjectManagerBoxActionPerformed(evt);
             }
         });
 
@@ -111,9 +111,9 @@ public class EditStudentDetails extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(StudentNameTF)
+                    .addComponent(LecturerNameTF)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(IntakeCodeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ProjectManagerBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(passwordTF))
                 .addContainerGap())
@@ -130,7 +130,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(StudentNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LecturerNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -138,7 +138,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(IntakeCodeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ProjectManagerBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveBtn)
@@ -170,56 +170,81 @@ public class EditStudentDetails extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void IntakeCodeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IntakeCodeBoxActionPerformed
+    private void ProjectManagerBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProjectManagerBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_IntakeCodeBoxActionPerformed
+    }//GEN-LAST:event_ProjectManagerBoxActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        EditStudentDetails.this.setVisible(false);
+        EditLecturerDetails.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
-        String selectedValue = (String) IntakeCodeBox.getSelectedItem();
-        saveData(StudentNameTF.getText(), passwordTF.getText(), selectedValue);
+        String selectedValue = (String) ProjectManagerBox.getSelectedItem();
+        saveData(LecturerNameTF.getText(), passwordTF.getText(), selectedValue);
     }//GEN-LAST:event_saveBtnActionPerformed
 
-    private void loadStudentDetails() {
-        StudentNameTF.setText(usernameToDelete);
+    private void loadLecturerDetails() {
+        LecturerNameTF.setText(usernameToDelete);
         passwordTF.setText(passwordToEdit);
-        IntakeCodeBox.setSelectedItem(intakeToEdit);
+        if (projectManagerStatus.equalsIgnoreCase("false")) {
+            ProjectManagerBox.setSelectedItem("No");
+        } else {
+            ProjectManagerBox.setSelectedItem("Yes");
+        }
     }
 
-    private void saveData(String usr, String pw, String intakeCode) {
-        try (RandomAccessFile raf = new RandomAccessFile("student.txt", "rw")) {
+    private void saveData(String usr, String pw, String projectManagerStatus) {
+        try (RandomAccessFile raf = new RandomAccessFile("lecturer.txt", "rw")) {
             StringBuilder newData = new StringBuilder();
             String line;
+            boolean foundProjectManager = false; // Flag to track if "Project Manager" line is found
+            boolean updatedPassword = false; // Flag to track if password line has been updated
+            boolean updatedSecondMarker = false; // Flag to track if "Second Marker" line has been updated
             while ((line = raf.readLine()) != null) {
                 String trimmedLine = line.trim(); // Trim the line for comparison
                 if (trimmedLine.startsWith("Username:") && trimmedLine.substring("Username:".length()).trim().equals(usernameToDelete)) {
-                    // Skip the next two lines (Password and Intake code) to delete previous data
-                    raf.readLine(); // Skip Password line
-                    raf.readLine(); // Skip Intake code line
-                    newData.append("Username:").append(usr).append("\nPassword:").append(pw).append("\nIntake code:").append(intakeCode).append("\n");
-
+                    // Append username
+                    newData.append("Username:").append(usr).append("\n");
+                } else if (trimmedLine.startsWith("Password:")) {
+                    // Skip appending the password line if it has been updated
+                    if (!updatedPassword) {
+                        newData.append("Password:").append(pw).append("\n");
+                        updatedPassword = true; // Set flag to true
+                    }
+                } else if (trimmedLine.startsWith("Project Manager:")) {
+                    // Append "Project Manager" status based on projectManagerStatus variable
+                    newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "true" : "false").append("\n");
+                    System.out.println(newData);
+                    foundProjectManager = true; // Set flag to true
+                } else if (trimmedLine.startsWith("Second Marker:") && !updatedSecondMarker) {
+                    // Append "Second Marker" line with its existing value only once
+                    newData.append(trimmedLine).append("\n");
+                    updatedSecondMarker = true; // Set flag to true
                 } else {
+                    // Append the line as it is if not modified
                     newData.append(line).append("\n");
-                    System.out.println(line);
                 }
             }
+            // If "Project Manager" line was not found, append it at the end
+            if (!foundProjectManager) {
+                newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "true" : "false").append("\n");
+            }
+            // Remove the last newline character if it exists
+            if (newData.length() > 0 && newData.charAt(newData.length() - 1) == '\n') {
+                newData.setLength(newData.length() - 1);
+            }
             raf.seek(0);
-            System.out.println(newData);
             raf.writeBytes(newData.toString());
-            JOptionPane.showMessageDialog(EditStudentDetails.this, "Data Updated Successfully!");
+            JOptionPane.showMessageDialog(EditLecturerDetails.this, "Data Updated Successfully!");
         } catch (IOException e) {
             System.err.println("Error reading or writing file: " + e.getMessage());
         }
 
-        EditStudentDetails.this.setVisible(false);
+        EditLecturerDetails.this.setVisible(false);
         Admin edt = new Admin();
         edt.setVisible(true);
-
     }
 
     /**
@@ -240,35 +265,38 @@ public class EditStudentDetails extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class
+            java.util.logging.Logger.getLogger(EditLecturerDetails.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class
+            java.util.logging.Logger.getLogger(EditLecturerDetails.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class
+            java.util.logging.Logger.getLogger(EditLecturerDetails.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditStudentDetails.class
+            java.util.logging.Logger.getLogger(EditLecturerDetails.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditStudentDetails().setVisible(true);
+                new EditLecturerDetails().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
-    private javax.swing.JComboBox<String> IntakeCodeBox;
-    private javax.swing.JTextField StudentNameTF;
+    private javax.swing.JTextField LecturerNameTF;
+    private javax.swing.JComboBox<String> ProjectManagerBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

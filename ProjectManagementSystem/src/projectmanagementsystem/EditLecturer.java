@@ -18,19 +18,19 @@ import javax.swing.JOptionPane;
  *
  * @author Tioh
  */
-public class EditStudent extends javax.swing.JFrame {
+public class EditLecturer extends javax.swing.JFrame {
 
     private ArrayList<String> passwords;
-    private ArrayList<String> intakeCodes;
+    private ArrayList<String> projectManager;
 
     /**
      * Creates new form Edit
      */
-    public EditStudent() {
+    public EditLecturer() {
         initComponents();
         passwords = new ArrayList<>();
-        intakeCodes = new ArrayList<>();
-        populateListFromFile("Student.txt");
+        projectManager = new ArrayList<>();
+        populateListFromFile("lecturer.txt");
     }
 
     /**
@@ -115,7 +115,7 @@ public class EditStudent extends javax.swing.JFrame {
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Student list");
+        jLabel1.setText("Lecturer list");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,11 +211,11 @@ public class EditStudent extends javax.swing.JFrame {
         int selectedIndex = fileList.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < passwords.size()) {
             // Proceed with your edit logic using StudentData.passwordToEdit
-            StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
-            StudentData.passwordToEdit = passwords.get(selectedIndex);
-            StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
-            EditStudentDetails editstudentdetails = new EditStudentDetails();
-            editstudentdetails.setVisible(true);
+            LecturerData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
+            LecturerData.passwordToEdit = passwords.get(selectedIndex);
+            LecturerData.projectManagerStatus = projectManager.get(selectedIndex);
+            EditLecturerDetails editlecturerdetails = new EditLecturerDetails();
+            editlecturerdetails.setVisible(true);
         } else {
             // Handle invalid selectedIndex, e.g., show an error message
             System.err.println("Invalid selectedIndex: " + selectedIndex);
@@ -228,9 +228,9 @@ public class EditStudent extends javax.swing.JFrame {
         if (selectedIndex != -1) {
             int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?");
             if (option == JOptionPane.YES_OPTION) {
-                StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
-                deleteLinesByUsername("Student.txt", StudentData.usernameToDelete);
-                JOptionPane.showMessageDialog(this, StudentData.usernameToDelete + "'s data has been deleted successfully!");
+                LecturerData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
+                deleteLinesByUsername("lecturer.txt", LecturerData.usernameToDelete);
+                JOptionPane.showMessageDialog(this, LecturerData.usernameToDelete + "'s data has been deleted successfully!");
                 restartProgram();
             }
         } else {
@@ -242,7 +242,7 @@ public class EditStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
         Admin admin = new Admin();
         admin.setVisible(true);
-        EditStudent.this.setVisible(false);
+        EditLecturer.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
@@ -259,9 +259,12 @@ public class EditStudent extends javax.swing.JFrame {
                 if (!line.startsWith("Username:" + username)) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
-                    // Skip the next three lines as well
-                    reader.readLine(); // Skip Password line
-                    reader.readLine(); // Skip Intake code line
+                    
+                    reader.readLine(); 
+                    reader.readLine(); 
+                    reader.readLine(); 
+                    reader.readLine(); 
+
                 }
             }
 
@@ -279,7 +282,7 @@ public class EditStudent extends javax.swing.JFrame {
     private void populateListFromFile(String filename) {
         ArrayList<String> usernames = new ArrayList<>();
         passwords = new ArrayList<>(); // Initialize passwords ArrayList
-        intakeCodes = new ArrayList<>();
+        projectManager = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -289,10 +292,10 @@ public class EditStudent extends javax.swing.JFrame {
                 } else if (line.startsWith("Password:")) {
                     String password = line.substring("Password:".length()).trim();
                     passwords.add(password); // Store the password in the ArrayList
-                } else if (line.startsWith("Intake code:")) {
+                } else if (line.startsWith("Project Manager:")) {
                     String[] parts = line.split(":");
                     String intakeCode = parts[1].trim();
-                    intakeCodes.add(intakeCode);
+                    projectManager.add(intakeCode);
                 }
             }
         } catch (IOException e) {
@@ -324,7 +327,7 @@ public class EditStudent extends javax.swing.JFrame {
         String javaHome = System.getProperty("java.home");
         String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
         String classpath = System.getProperty("java.class.path");
-        String className = EditStudent.class
+        String className = EditLecturer.class
                 .getName();
 
         ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
@@ -355,28 +358,30 @@ public class EditStudent extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditStudent.class
+            java.util.logging.Logger.getLogger(EditLecturer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditStudent.class
+            java.util.logging.Logger.getLogger(EditLecturer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditStudent.class
+            java.util.logging.Logger.getLogger(EditLecturer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditStudent.class
+            java.util.logging.Logger.getLogger(EditLecturer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditStudent().setVisible(true);
+                new EditLecturer().setVisible(true);
             }
         });
     }

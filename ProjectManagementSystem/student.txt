@@ -1,15 +1,7 @@
+
+
+
 Username:josh
 Password:pokemon911
-Intake code:Not Assigned
-
-
-Username:celes
-Password:metagross816
 Intake code:UCDF2410
-t Assigned
-
-
-Username:owen
-Password:12345
-Intake code:UCDF2410
-Assigned
+ssigned
