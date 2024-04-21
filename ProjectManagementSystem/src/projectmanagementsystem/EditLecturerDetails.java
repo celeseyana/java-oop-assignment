@@ -216,7 +216,6 @@ public class EditLecturerDetails extends javax.swing.JFrame {
                 } else if (trimmedLine.startsWith("Project Manager:")) {
                     // Append "Project Manager" status based on projectManagerStatus variable
                     newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "true" : "false").append("\n");
-                    System.out.println(newData);
                     foundProjectManager = true; // Set flag to true
                 } else if (trimmedLine.startsWith("Second Marker:") && !updatedSecondMarker) {
                     // Append "Second Marker" line with its existing value only once

@@ -145,6 +145,9 @@ public class Admin extends javax.swing.JFrame {
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        Admin.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
