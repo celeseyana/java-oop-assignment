@@ -184,8 +184,10 @@ public class Login extends javax.swing.JFrame {
         String password = tfpassword.getText();
         if (loginAsStudent(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
+            // insert student class here
         } else if (loginAsLecturer(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
+            // insert lecturer class here
         } else if (username.equals("Admin") && (password.equals("Admin123"))) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
             Admin admin = new Admin();
