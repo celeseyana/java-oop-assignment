@@ -62,13 +62,13 @@ public class Register extends javax.swing.JFrame {
             raf.writeBytes("Username:" + usr + "\r\n");
             raf.writeBytes("Password:" + pswd + "\r\n");
             raf.writeBytes("""
-                           Project Manager: false\r
+                           Project Manager:false\r
                            """);
             raf.writeBytes("""
-                           Supervisor: false\r
+                           Supervisor:false\r
                            """);
             raf.writeBytes("""
-                           Second Marker: false\r
+                           Second Marker:false\r
                            """);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
