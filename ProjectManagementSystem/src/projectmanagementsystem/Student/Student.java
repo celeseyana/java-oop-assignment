@@ -4,6 +4,7 @@
  */
 package projectmanagementsystem.Student;
 
+import projectmanagementsystem.Admin.StudentData;
 import projectmanagementsystem.Login;
 
 /**
@@ -12,11 +13,14 @@ import projectmanagementsystem.Login;
  */
 public class Student extends javax.swing.JFrame {
 
+    String studentname = StudentData.usernameToDelete;
+
     /**
      * Creates new form Student
      */
     public Student() {
         initComponents();
+        jLabel2.setText("Welcome back, " + studentname + "!");
     }
 
     /**

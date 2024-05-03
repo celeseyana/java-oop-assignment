@@ -28,6 +28,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
     public EditLecturerDetails() {
         initComponents();
         loadLecturerDetails();
+        
     }
 
     /**

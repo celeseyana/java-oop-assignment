@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import projectmanagementsystem.Admin.StudentData;
+import projectmanagementsystem.Student.Student;
 
 /**
  *
@@ -185,6 +187,11 @@ public class Login extends javax.swing.JFrame {
         String password = tfpassword.getText();
         if (loginAsStudent(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
+            StudentData.usernameToDelete = username;
+            Student student = new Student();
+            student.setVisible(true);
+            Login.this.setVisible(false);
+
             // insert student class here
         } else if (loginAsLecturer(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
