@@ -53,6 +53,7 @@ public class ReportSubmission extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         TypeBox = new javax.swing.JComboBox<>();
+        BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         AssessmentTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
@@ -82,6 +83,13 @@ public class ReportSubmission extends javax.swing.JFrame {
 
         TypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Internship", "Investigation Reports", "CP1", "CP2", "RMCP", "FYP" }));
 
+        BackBtn.setText("Back");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -91,7 +99,10 @@ public class ReportSubmission extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AddBtn)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(AddBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(BackBtn))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,8 +139,10 @@ public class ReportSubmission extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(AddBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddBtn)
+                    .addComponent(BackBtn))
                 .addGap(38, 38, 38))
         );
 
@@ -191,6 +204,13 @@ public class ReportSubmission extends javax.swing.JFrame {
         addAssessment(selectedValue);
     }//GEN-LAST:event_AddBtnActionPerformed
 
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        Student student = new Student();
+        student.setVisible(true);
+        ReportSubmission.this.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
     void addAssessment(String type) {
         Set<Integer> existingNumbers = readExistingNumbersFromFile();
         Random random = new Random();
@@ -213,8 +233,8 @@ public class ReportSubmission extends javax.swing.JFrame {
                 raf.writeBytes("\r\n");
             }
 
-            raf.writeBytes("id:" + randomNumber + "\r\n");
             raf.writeBytes("Student:" + StudentData.usernameToDelete + "\r\n");
+            raf.writeBytes("id:" + randomNumber + "\r\n");
             raf.writeBytes("Type:" + type + "\r\n");
             raf.writeBytes("Date:" + currentTime + "\r\n");
             raf.writeBytes("Link:https://moodle.AGH.edu.my/" + code + "\r\n");
@@ -246,12 +266,14 @@ public class ReportSubmission extends javax.swing.JFrame {
         return existingNumbers;
     }
 
+    // formats the date time
     private static LocalDateTime getCurrentTime() {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(currentTime.format(formatter), formatter);
     }
 
+    // restart the class
     private void restartProgram() {
         String javaHome = System.getProperty("java.home");
         String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
@@ -269,6 +291,7 @@ public class ReportSubmission extends javax.swing.JFrame {
         }
     }
 
+    // populates the JTable from data in the text file
     public void populateTable(String usernameToDelete) {
         DefaultTableModel model = (DefaultTableModel) AssessmentTable.getModel();
         model.setRowCount(0); // Clear existing rows in the table
@@ -276,7 +299,7 @@ public class ReportSubmission extends javax.swing.JFrame {
         try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":"); // Split at the first occurrence of ":" only
+                String[] parts = line.split(":",2); // Split at the first occurrence of ":" only
 
                 // Check if the line contains data for the desired user
                 if (parts.length >= 2 && parts[0].trim().equals("Student")
@@ -356,6 +379,7 @@ public class ReportSubmission extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
     private javax.swing.JTable AssessmentTable;
+    private javax.swing.JButton BackBtn;
     private javax.swing.JComboBox<String> TypeBox;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
