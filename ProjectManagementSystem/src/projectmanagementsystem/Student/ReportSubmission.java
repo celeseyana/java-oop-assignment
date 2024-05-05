@@ -5,9 +5,11 @@
 package projectmanagementsystem.Student;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import projectmanagementsystem.Admin.StudentData;
@@ -19,6 +21,7 @@ import java.util.logging.Logger;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -56,8 +59,8 @@ public class ReportSubmission extends javax.swing.JFrame {
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         AssessmentTable = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        EditBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,49 +156,57 @@ public class ReportSubmission extends javax.swing.JFrame {
             new String [] {
                 "ID", "Assignment Type", "Date", "Submission Link"
             }
-        ));
-        jScrollPane1.setViewportView(AssessmentTable);
 
-        jButton2.setText("Edit");
+        )
+        {public boolean isCellEditable(int row, int column){return false;}}
+    );
+    jScrollPane1.setViewportView(AssessmentTable);
 
-        jButton3.setText("Delete");
+    EditBtn.setText("Edit");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(138, 138, 138))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
-        );
+    DeleteBtn.setText("Delete");
+    DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            DeleteBtnActionPerformed(evt);
+        }
+    });
 
-        pack();
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(138, 138, 138))))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap())
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap(24, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(EditBtn)
+                .addComponent(DeleteBtn))
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(16, 16, 16))
+    );
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
@@ -210,6 +221,55 @@ public class ReportSubmission extends javax.swing.JFrame {
         student.setVisible(true);
         ReportSubmission.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = AssessmentTable.getSelectedRow();
+        if (selectedIndex != -1) {
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this?");
+            if (option == JOptionPane.YES_OPTION) {
+                Object value = AssessmentTable.getValueAt(selectedIndex, 0); // Assuming the first column is index 0 
+                String val = value.toString();
+                deleteLinesById("assessment.txt", val);
+                JOptionPane.showMessageDialog(this, value + "'s data has been deleted successfully!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a id to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_DeleteBtnActionPerformed
+
+    private static void deleteLinesById(String filename, String id) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            StringBuilder buffer = new StringBuilder();
+            String line;
+            boolean deleteNextLines = false;
+            int linesToDelete = 4; // Including the line with the ID
+
+            while ((line = reader.readLine()) != null) {
+                if (deleteNextLines) {
+                    deleteNextLines = false;
+                    linesToDelete--;
+                    continue;
+                }
+
+                if (line.startsWith("id:" + id)) {
+                    deleteNextLines = true;
+                    continue;
+                }
+
+                buffer.append(line).append(System.lineSeparator());
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                writer.write(buffer.toString());
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
 
     void addAssessment(String type) {
         Set<Integer> existingNumbers = readExistingNumbersFromFile();
@@ -238,7 +298,6 @@ public class ReportSubmission extends javax.swing.JFrame {
             raf.writeBytes("Type:" + type + "\r\n");
             raf.writeBytes("Date:" + currentTime + "\r\n");
             raf.writeBytes("Link:https://moodle.AGH.edu.my/" + code + "\r\n");
-            restartProgram();
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ReportSubmission.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,6 +307,7 @@ public class ReportSubmission extends javax.swing.JFrame {
 
     }
 
+    // checks if the id is taken or not
     private static Set<Integer> readExistingNumbersFromFile() {
         Set<Integer> existingNumbers = new HashSet<>();
 
@@ -294,12 +354,11 @@ public class ReportSubmission extends javax.swing.JFrame {
     // populates the JTable from data in the text file
     public void populateTable(String usernameToDelete) {
         DefaultTableModel model = (DefaultTableModel) AssessmentTable.getModel();
-        model.setRowCount(0); // Clear existing rows in the table
 
         try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":",2); // Split at the first occurrence of ":" only
+                String[] parts = line.split(":", 2); // Split at the first occurrence of ":" only
 
                 // Check if the line contains data for the desired user
                 if (parts.length >= 2 && parts[0].trim().equals("Student")
@@ -380,9 +439,9 @@ public class ReportSubmission extends javax.swing.JFrame {
     private javax.swing.JButton AddBtn;
     private javax.swing.JTable AssessmentTable;
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton DeleteBtn;
+    private javax.swing.JButton EditBtn;
     private javax.swing.JComboBox<String> TypeBox;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

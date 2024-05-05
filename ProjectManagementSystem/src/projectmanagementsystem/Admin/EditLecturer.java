@@ -251,7 +251,7 @@ public class EditLecturer extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitBtnActionPerformed
 
-    public static void deleteLinesByUsername(String filename, String username) {
+    private static void deleteLinesByUsername(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder buffer = new StringBuilder();
             String line;
