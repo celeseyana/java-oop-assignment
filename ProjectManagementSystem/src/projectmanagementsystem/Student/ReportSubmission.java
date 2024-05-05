@@ -36,6 +36,9 @@ public class ReportSubmission extends javax.swing.JFrame {
     public ReportSubmission() {
         initComponents();
         populateTable(StudentData.usernameToDelete);
+        String filePath = "assessment.txt";
+        deleteDiscrepancies(filePath);
+        System.out.println("Discrepancies deleted successfully.");
     }
 
     /**
@@ -268,6 +271,45 @@ public class ReportSubmission extends javax.swing.JFrame {
 
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    public static void deleteDiscrepancies(String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath)); BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "_temp"))) {
+
+            String line;
+            boolean validBlock = false;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("id:") && !validBlock) { // Check for "id" line in a new block
+                    validBlock = true;
+                } else if (line.startsWith("Type:") && validBlock) { // Check for "Type" line in a valid block
+                    writer.write("\n"); // Write an empty line as block separator
+                }
+
+                if (validBlock) { // Write lines from valid blocks to the temporary file
+                    writer.write(line);
+                    writer.newLine();
+                }
+
+                if (line.isEmpty()) { // Reset valid block flag at the end of each block
+                    validBlock = false;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading or writing file: " + e.getMessage());
+        }
+
+        // Rename the temporary file to the original file name
+        renameFile(filePath + "_temp", filePath);
+    }
+
+    private static void renameFile(String source, String target) {
+        try {
+            java.nio.file.Files.move(java.nio.file.Paths.get(source), java.nio.file.Paths.get(target),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.err.println("Error renaming file: " + e.getMessage());
         }
     }
 
