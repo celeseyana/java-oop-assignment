@@ -37,8 +37,8 @@ public class ReportSubmission extends javax.swing.JFrame {
         initComponents();
         populateTable(StudentData.usernameToDelete);
         String filePath = "assessment.txt";
-        deleteDiscrepancies(filePath);
-        System.out.println("Discrepancies deleted successfully.");
+//        deleteSingleStudentLine(filePath);
+//        System.out.println("Discrepancies deleted successfully.");
     }
 
     /**
@@ -214,6 +214,7 @@ public class ReportSubmission extends javax.swing.JFrame {
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Successfully submitted!");
         String selectedValue = (String) TypeBox.getSelectedItem();
         addAssessment(selectedValue);
     }//GEN-LAST:event_AddBtnActionPerformed
@@ -245,22 +246,23 @@ public class ReportSubmission extends javax.swing.JFrame {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder buffer = new StringBuilder();
             String line;
-            boolean deleteNextLines = false;
-            int linesToDelete = 4; // Including the line with the ID
+            boolean skipNextLines = false;
 
             while ((line = reader.readLine()) != null) {
-                if (deleteNextLines) {
-                    deleteNextLines = false;
-                    linesToDelete--;
-                    continue;
+                if (!line.startsWith("id:" + id)) {
+                    buffer.append(line).append(System.lineSeparator());
+                } else {
+                    skipNextLines = true; // Set flag to skip next lines after ID match
                 }
 
-                if (line.startsWith("id:" + id)) {
-                    deleteNextLines = true;
-                    continue;
+                if (skipNextLines) {
+                    // Skip the next 4 lines assuming they are to be deleted
+                    reader.readLine();
+                    reader.readLine();
+                    reader.readLine();
+                    reader.readLine();
+                    skipNextLines = false; // Reset flag after skipping lines
                 }
-
-                buffer.append(line).append(System.lineSeparator());
             }
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
@@ -274,45 +276,48 @@ public class ReportSubmission extends javax.swing.JFrame {
         }
     }
 
-    public static void deleteDiscrepancies(String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath)); BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "_temp"))) {
+//    private static void deleteSingleStudentLine(String filename) {
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+//            StringBuilder buffer = new StringBuilder();
+//            String line;
+//            boolean deleteNextLines = false;
+//
+//            while ((line = reader.readLine()) != null) {
+//                if (deleteNextLines) {
+//                    deleteNextLines = false;
+//                    continue;
+//                }
+//
+//                if (line.startsWith("Student:")) {
+//                    String nextLine = reader.readLine(); // Read the next line
+//                    if (nextLine == null || nextLine.trim().isEmpty()) {
+//                        deleteNextLines = true;
+//                        continue;
+//                    }
+//                }
+//
+//                buffer.append(line).append(System.lineSeparator());
+//            }
+//
+//            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+//                writer.write(buffer.toString());
+//            } catch (IOException e) {
+//                System.err.println("Error writing to file: " + e.getMessage());
+//            }
+//
+//        } catch (IOException e) {
+//            System.err.println("Error reading file: " + e.getMessage());
+//        }
+//    }
 
-            String line;
-            boolean validBlock = false;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("id:") && !validBlock) { // Check for "id" line in a new block
-                    validBlock = true;
-                } else if (line.startsWith("Type:") && validBlock) { // Check for "Type" line in a valid block
-                    writer.write("\n"); // Write an empty line as block separator
-                }
-
-                if (validBlock) { // Write lines from valid blocks to the temporary file
-                    writer.write(line);
-                    writer.newLine();
-                }
-
-                if (line.isEmpty()) { // Reset valid block flag at the end of each block
-                    validBlock = false;
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading or writing file: " + e.getMessage());
-        }
-
-        // Rename the temporary file to the original file name
-        renameFile(filePath + "_temp", filePath);
-    }
-
-    private static void renameFile(String source, String target) {
-        try {
-            java.nio.file.Files.move(java.nio.file.Paths.get(source), java.nio.file.Paths.get(target),
-                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            System.err.println("Error renaming file: " + e.getMessage());
-        }
-    }
-
+//    private static void renameFile(String source, String target) {
+//        try {
+//            java.nio.file.Files.move(java.nio.file.Paths.get(source), java.nio.file.Paths.get(target),
+//                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {
+//            System.err.println("Error renaming file: " + e.getMessage());
+//        }
+//    }
     void addAssessment(String type) {
         Set<Integer> existingNumbers = readExistingNumbersFromFile();
         Random random = new Random();
