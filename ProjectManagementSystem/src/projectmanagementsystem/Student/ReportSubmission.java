@@ -6,7 +6,6 @@ package projectmanagementsystem.Student;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Tioh
  */
-public class ReportSubmission extends javax.swing.JFrame {
+public final class ReportSubmission extends javax.swing.JFrame {
 
     /**
      * Creates new form ReportSubmission
@@ -36,8 +35,6 @@ public class ReportSubmission extends javax.swing.JFrame {
     public ReportSubmission() {
         initComponents();
         populateTable(StudentData.usernameToDelete);
-        String filePath = "assessment.txt";
-//        deleteSingleStudentLine(filePath);
 //        System.out.println("Discrepancies deleted successfully.");
     }
 
@@ -235,6 +232,8 @@ public class ReportSubmission extends javax.swing.JFrame {
                 Object value = AssessmentTable.getValueAt(selectedIndex, 0); // Assuming the first column is index 0 
                 String val = value.toString();
                 deleteLinesById("assessment.txt", val);
+                String filePath = "assessment.txt";
+                deleteSingleStudentLine(filePath);
                 JOptionPane.showMessageDialog(this, value + "'s data has been deleted successfully!");
             }
         } else {
@@ -276,48 +275,46 @@ public class ReportSubmission extends javax.swing.JFrame {
         }
     }
 
-//    private static void deleteSingleStudentLine(String filename) {
-//        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-//            StringBuilder buffer = new StringBuilder();
-//            String line;
-//            boolean deleteNextLines = false;
-//
-//            while ((line = reader.readLine()) != null) {
-//                if (deleteNextLines) {
-//                    deleteNextLines = false;
-//                    continue;
-//                }
-//
-//                if (line.startsWith("Student:")) {
-//                    String nextLine = reader.readLine(); // Read the next line
-//                    if (nextLine == null || nextLine.trim().isEmpty()) {
-//                        deleteNextLines = true;
-//                        continue;
-//                    }
-//                }
-//
-//                buffer.append(line).append(System.lineSeparator());
-//            }
-//
-//            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-//                writer.write(buffer.toString());
-//            } catch (IOException e) {
-//                System.err.println("Error writing to file: " + e.getMessage());
-//            }
-//
-//        } catch (IOException e) {
-//            System.err.println("Error reading file: " + e.getMessage());
-//        }
-//    }
+    private static void deleteSingleStudentLine(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            StringBuilder buffer = new StringBuilder();
+            String line;
+            boolean deleteLine = false;
+            boolean studentLineFound = false;
 
-//    private static void renameFile(String source, String target) {
-//        try {
-//            java.nio.file.Files.move(java.nio.file.Paths.get(source), java.nio.file.Paths.get(target),
-//                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            System.err.println("Error renaming file: " + e.getMessage());
-//        }
-//    }
+            while ((line = reader.readLine()) != null) {
+                if (deleteLine) {
+                    deleteLine = false;
+                    continue;
+                }
+
+                if (line.startsWith("Student:")) {
+                    studentLineFound = true;
+                    String nextLine = reader.readLine(); // Read the next line
+                    if (nextLine == null || nextLine.trim().isEmpty()) {
+                        // If "Student:" line is not followed by another line, delete it
+                        deleteLine = true;
+                        continue;
+                    } else {
+                        buffer.append(line).append(System.lineSeparator());
+                        buffer.append(nextLine).append(System.lineSeparator());
+                    }
+                } else {
+                    buffer.append(line).append(System.lineSeparator());
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                writer.write(buffer.toString());
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
     void addAssessment(String type) {
         Set<Integer> existingNumbers = readExistingNumbersFromFile();
         Random random = new Random();
@@ -378,24 +375,6 @@ public class ReportSubmission extends javax.swing.JFrame {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(currentTime.format(formatter), formatter);
-    }
-
-    // restart the class
-    private void restartProgram() {
-        String javaHome = System.getProperty("java.home");
-        String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
-        String classpath = System.getProperty("java.class.path");
-        String className = ReportSubmission.class
-                .getName();
-
-        ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
-
-        try {
-            builder.start();
-            System.exit(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     // populates the JTable from data in the text file
@@ -475,10 +454,8 @@ public class ReportSubmission extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReportSubmission().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ReportSubmission().setVisible(true);
         });
     }
 
