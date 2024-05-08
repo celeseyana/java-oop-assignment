@@ -4,9 +4,10 @@
  */
 package projectmanagementsystem.Admin;
 
-import projectmanagementsystem.Admin.Admin;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -28,7 +29,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
     public EditLecturerDetails() {
         initComponents();
         loadLecturerDetails();
-        
+
     }
 
     /**
@@ -185,6 +186,9 @@ public class EditLecturerDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
         String selectedValue = (String) ProjectManagerBox.getSelectedItem();
         saveData(LecturerNameTF.getText(), passwordTF.getText(), selectedValue);
+        EditLecturerDetails.this.setVisible(false);
+        Admin edt = new Admin();
+        edt.setVisible(true);
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void loadLecturerDetails() {
@@ -197,55 +201,38 @@ public class EditLecturerDetails extends javax.swing.JFrame {
         }
     }
 
-    private void saveData(String usr, String pw, String projectManagerStatus) {
-        try (RandomAccessFile raf = new RandomAccessFile("lecturer.txt", "rw")) {
-            StringBuilder newData = new StringBuilder();
+    public static void saveData(String usr, String pw, String projectManagerStatus) {
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("lecturer.txt"))) {
             String line;
-            boolean foundProjectManager = false; // Flag to track if "Project Manager" line is found
-            boolean updatedPassword = false; // Flag to track if password line has been updated
-            boolean updatedSecondMarker = false; // Flag to track if "Second Marker" line has been updated
-            while ((line = raf.readLine()) != null) {
-                String trimmedLine = line.trim(); // Trim the line for comparison
-                if (trimmedLine.startsWith("Username:") && trimmedLine.substring("Username:".length()).trim().equals(usernameToDelete)) {
-                    // Append username
-                    newData.append("Username:").append(usr).append("\n");
-                } else if (trimmedLine.startsWith("Password:")) {
-                    // Skip appending the password line if it has been updated
-                    if (!updatedPassword) {
-                        newData.append("Password:").append(pw).append("\n");
-                        updatedPassword = true; // Set flag to true
+
+            while ((line = reader.readLine()) != null) {
+                String trimmedLine = line.trim();
+                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\",")) {
+                    String[] parts = trimmedLine.split("\",\\s*\"");
+                    if (parts.length >= 5 && parts[0].equals("\"" + usr + "\"")) {
+                        fileContent.append("\"").append(usr).append("\", \"").append(pw).append("\", \"")
+                                .append(projectManagerStatus).append("\", \"Not Assigned\", \"Not Assigned\"\n");
+                    } else {
+                        fileContent.append(line).append("\n");
                     }
-                } else if (trimmedLine.startsWith("Project Manager:")) {
-                    // Append "Project Manager" status based on projectManagerStatus variable
-                    newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "Assigned" : "Not Assigned").append("\n");
-                    foundProjectManager = true; // Set flag to true
-                } else if (trimmedLine.startsWith("Second Marker:") && !updatedSecondMarker) {
-                    // Append "Second Marker" line with its existing value only once
-                    newData.append(trimmedLine).append("\n");
-                    updatedSecondMarker = true; // Set flag to true
                 } else {
-                    // Append the line as it is if not modified
-                    newData.append(line).append("\n");
+                    fileContent.append(line).append("\n");
                 }
             }
-            // If "Project Manager" line was not found, append it at the end
-            if (!foundProjectManager) {
-                newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "true" : "false").append("\n");
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("lecturer.txt"))) {
+                writer.write(fileContent.toString());
+                System.out.println("Data Updated Successfully!");
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
             }
-            // Remove the last newline character if it exists
-            if (newData.length() > 0 && newData.charAt(newData.length() - 1) == '\n') {
-                newData.setLength(newData.length() - 1);
-            }
-            raf.seek(0);
-            raf.writeBytes(newData.toString());
-            JOptionPane.showMessageDialog(EditLecturerDetails.this, "Data Updated Successfully!");
+
         } catch (IOException e) {
-            System.err.println("Error reading or writing file: " + e.getMessage());
+            System.err.println("Error reading file: " + e.getMessage());
         }
 
-        EditLecturerDetails.this.setVisible(false);
-        Admin edt = new Admin();
-        edt.setVisible(true);
     }
 
     /**

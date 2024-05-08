@@ -3,15 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/github/java-oop-assignment/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/Student/Student.java</file>
-            <file>file:/C:/github/java-oop-assignment/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/Login.java</file>
-=======
-            <file>file:/C:/Github/java%20oop%20module/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/projmanager/reportviewFrame.java</file>
-            <file>file:/C:/Github/java%20oop%20module/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/projmanager/assignMkrSpvr.java</file>
-            <file>file:/C:/Github/java%20oop%20module/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/projmanager/homepageprojmanager.java</file>
-            <file>file:/C:/Github/java%20oop%20module/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/projmanager/assignIntent.java</file>
->>>>>>> 315553a38fd877481ae2fac28e9c52d376f9b963
+            <file>file:/D:/github/java-group-assignment/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/Admin/EditStudent.java</file>
+            <file>file:/D:/github/java-group-assignment/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/Admin/EditLecturer.java</file>
+            <file>file:/D:/github/java-group-assignment/java-oop-assignment/ProjectManagementSystem/src/projectmanagementsystem/Admin/EditLecturerDetails.java</file>
         </group>
     </open-files>
 </project-private>

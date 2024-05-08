@@ -4,7 +4,6 @@
  */
 package projectmanagementsystem.Admin;
 
-import projectmanagementsystem.Admin.Admin;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +23,8 @@ public class EditLecturer extends javax.swing.JFrame {
 
     private ArrayList<String> passwords;
     private ArrayList<String> projectManager;
+    private ArrayList<String> supervisor;
+    private ArrayList<String> secondMarker;
 
     /**
      * Creates new form Edit
@@ -32,6 +34,7 @@ public class EditLecturer extends javax.swing.JFrame {
         passwords = new ArrayList<>();
         projectManager = new ArrayList<>();
         populateListFromFile("lecturer.txt");
+//        removeDuplicates("lecturer.txt");
     }
 
     /**
@@ -218,7 +221,6 @@ public class EditLecturer extends javax.swing.JFrame {
             EditLecturerDetails editlecturerdetails = new EditLecturerDetails();
             editlecturerdetails.setVisible(true);
         } else {
-            // Handle invalid selectedIndex, e.g., show an error message
             System.err.println("Invalid selectedIndex: " + selectedIndex);
         }
     }//GEN-LAST:event_EditBtnActionPerformed
@@ -257,15 +259,13 @@ public class EditLecturer extends javax.swing.JFrame {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("Username:" + username)) {
+                if (!line.startsWith("\"" + username + "\",")) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
-                    
-                    reader.readLine(); 
-                    reader.readLine(); 
-                    reader.readLine(); 
-                    reader.readLine(); 
-
+                    // Skip the next four lines after finding the matching username
+                    for (int i = 0; i < 4; i++) {
+                        reader.readLine();
+                    }
                 }
             }
 
@@ -284,29 +284,27 @@ public class EditLecturer extends javax.swing.JFrame {
         ArrayList<String> usernames = new ArrayList<>();
         passwords = new ArrayList<>(); // Initialize passwords ArrayList
         projectManager = new ArrayList<>();
+        supervisor = new ArrayList<>();
+        secondMarker = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Username:")) {
-                    String username = line.substring("Username:".length()).trim();
-                    usernames.add(username);
-                } else if (line.startsWith("Password:")) {
-                    String password = line.substring("Password:".length()).trim();
-                    passwords.add(password); // Store the password in the ArrayList
-                } else if (line.startsWith("Project Manager:")) {
-                    String[] parts = line.split(":");
-                    String intakeCode = parts[1].trim();
-                    projectManager.add(intakeCode);
+                String[] parts = line.split(",");
+                if (parts.length >= 5) {
+                    usernames.add(parts[0].trim().replaceAll("^\"|\"$", ""));
+                    passwords.add(parts[1].trim().replaceAll("^\"|\"$", ""));
+                    projectManager.add(parts[2].trim().replaceAll("^\"|\"$", ""));
+                    supervisor.add(parts[3].trim().replaceAll("^\"|\"$", ""));
+                    secondMarker.add(parts[4].trim().replaceAll("^\"|\"$", ""));
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
 
-        // Convert ArrayList to array for JList
-        final String[] usernamesArray = new String[usernames.size()];
-
-        usernames.toArray(usernamesArray);
+        // Convert ArrayLists to arrays for JList
+        String[] usernamesArray = usernames.toArray(new String[0]);
 
         // Set the array as the data model for the JList
         fileList.setModel(
@@ -340,6 +338,42 @@ public class EditLecturer extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
+//    public static void removeDuplicates(String filename) {
+//        Set<String> usernames = new HashSet<>();
+//        String line;
+//        StringBuilder fileContent = new StringBuilder();
+//
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+//            while ((line = reader.readLine()) != null) {
+//                String trimmedLine = line.trim();
+//                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\",")) {
+//                    String[] parts = trimmedLine.split("\",\\s*\"");
+//                    if (parts.length > 0) {
+//                        String username = parts[0].replace("\"", ""); // Remove double quotes
+//                        if (usernames.contains(username)) {
+//                            // Duplicate username found, skip writing this line
+//                            continue;
+//                        } else {
+//                            usernames.add(username);
+//                        }
+//                    }
+//                }
+//                fileContent.append(trimmedLine).append("\n");
+//            }
+//        } catch (IOException e) {
+//            System.err.println("Error reading file: " + e.getMessage());
+//            return;
+//        }
+//
+//        // Write the updated content back to the original file
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+//            writer.write(fileContent.toString());
+//            System.out.println("Duplicates removed from file: " + filename);
+//        } catch (IOException e) {
+//            System.err.println("Error writing to file: " + e.getMessage());
+//        }
+//    }
 
     /**
      * @param args the command line arguments

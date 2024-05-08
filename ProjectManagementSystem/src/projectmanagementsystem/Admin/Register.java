@@ -4,7 +4,6 @@
  */
 package projectmanagementsystem.Admin;
 
-import projectmanagementsystem.Admin.Admin;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -55,22 +54,9 @@ public class Register extends javax.swing.JFrame {
                 raf.writeBytes("\r\n");
                 raf.writeBytes("\r\n");
             }
-<<<<<<< HEAD
             raf.writeBytes("\"" + usr + "\", \"" + pswd + "\", \"Not Assigned\", \"Not Assigned\", \"Not Assigned\"\r\n");
             raf.close();
-=======
-            raf.writeBytes("Username:" + usr + "\r\n");
-            raf.writeBytes("Password:" + pswd + "\r\n");
-            raf.writeBytes("""
-                           Project Manager:Not Assigned\r
-                           """);
-            raf.writeBytes("""
-                           Supervisor:Not Assigned\r
-                           """);
-            raf.writeBytes("""
-                           Second Marker:Not Assigned\r
-                           """);
->>>>>>> 315553a38fd877481ae2fac28e9c52d376f9b963
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
