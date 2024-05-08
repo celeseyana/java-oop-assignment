@@ -34,13 +34,9 @@ public class Register extends javax.swing.JFrame {
             }
             if (ln > 0) {
                 raf.writeBytes("\r\n");
-                raf.writeBytes("\r\n");
             }
-            raf.writeBytes("Username:" + usr + "\r\n");
-            raf.writeBytes("Password:" + pswd + "\r\n");
-            raf.writeBytes("""
-                           Intake code:Not Assigned\r
-                           """);
+            raf.writeBytes("\"" + usr + "\", \"" + pswd + "\", \"Not Assigned\", \"null\"\r\n");
+            raf.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -59,17 +55,8 @@ public class Register extends javax.swing.JFrame {
                 raf.writeBytes("\r\n");
                 raf.writeBytes("\r\n");
             }
-            raf.writeBytes("Username:" + usr + "\r\n");
-            raf.writeBytes("Password:" + pswd + "\r\n");
-            raf.writeBytes("""
-                           Project Manager:false\r
-                           """);
-            raf.writeBytes("""
-                           Supervisor:false\r
-                           """);
-            raf.writeBytes("""
-                           Second Marker:false\r
-                           """);
+            raf.writeBytes("\"" + usr + "\", \"" + pswd + "\", \"Not Assigned\", \"Not Assigned\", \"Not Assigned\"\r\n");
+            raf.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

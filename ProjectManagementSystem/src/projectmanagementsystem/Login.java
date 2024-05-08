@@ -34,15 +34,14 @@ public class Login extends javax.swing.JFrame {
             String storedUsername = null;
             String storedPassword = null;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Username:") && line.contains(username)) {
-                    storedUsername = line.split(":")[1].trim();
+                if (line.startsWith("\"") && line.endsWith("\"") && line.contains(username)) {
+                    storedUsername = line.split(",")[0].trim().replace("\"", "");
 
-                    String passwordLine = reader.readLine();
-                    if (passwordLine != null && passwordLine.startsWith("Password:") && passwordLine.contains(password)) {
-                        storedPassword = passwordLine.split(":")[1].trim();
+                    String[] parts = line.split(",");
+                    if (parts.length >= 2) {
+                        storedPassword = parts[1].trim().replace("\"", "");
                     }
                 }
-
             }
             if (storedUsername != null && storedPassword != null && storedUsername.equals(username) && storedPassword.equals(password)) {
                 return true; // Credentials match
