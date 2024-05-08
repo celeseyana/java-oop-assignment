@@ -190,7 +190,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
     private void loadLecturerDetails() {
         LecturerNameTF.setText(usernameToDelete);
         passwordTF.setText(passwordToEdit);
-        if (projectManagerStatus.equalsIgnoreCase("false")) {
+        if (projectManagerStatus.equalsIgnoreCase("Not Assigned")) {
             ProjectManagerBox.setSelectedItem("No");
         } else {
             ProjectManagerBox.setSelectedItem("Yes");
@@ -217,7 +217,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
                     }
                 } else if (trimmedLine.startsWith("Project Manager:")) {
                     // Append "Project Manager" status based on projectManagerStatus variable
-                    newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "true" : "false").append("\n");
+                    newData.append("Project Manager: ").append(projectManagerStatus.equalsIgnoreCase("yes") ? "Assigned" : "Not Assigned").append("\n");
                     foundProjectManager = true; // Set flag to true
                 } else if (trimmedLine.startsWith("Second Marker:") && !updatedSecondMarker) {
                     // Append "Second Marker" line with its existing value only once
