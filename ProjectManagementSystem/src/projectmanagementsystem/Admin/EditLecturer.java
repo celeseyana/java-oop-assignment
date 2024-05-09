@@ -11,8 +11,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -218,6 +216,8 @@ public class EditLecturer extends javax.swing.JFrame {
             LecturerData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
             LecturerData.passwordToEdit = passwords.get(selectedIndex);
             LecturerData.projectManagerStatus = projectManager.get(selectedIndex);
+            LecturerData.supervisorStatus = supervisor.get(selectedIndex);
+            LecturerData.secondMarkerStatus = secondMarker.get(selectedIndex);
             EditLecturerDetails editlecturerdetails = new EditLecturerDetails();
             editlecturerdetails.setVisible(true);
         } else {

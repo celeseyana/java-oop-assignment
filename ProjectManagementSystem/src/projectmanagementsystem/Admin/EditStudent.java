@@ -4,7 +4,6 @@
  */
 package projectmanagementsystem.Admin;
 
-import projectmanagementsystem.Admin.Admin;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +21,7 @@ public class EditStudent extends javax.swing.JFrame {
 
     private ArrayList<String> passwords;
     private ArrayList<String> intakeCodes;
+    private ArrayList<String> assessmentType;
 
     /**
      * Creates new form Edit
@@ -31,6 +30,7 @@ public class EditStudent extends javax.swing.JFrame {
         initComponents();
         passwords = new ArrayList<>();
         intakeCodes = new ArrayList<>();
+        assessmentType = new ArrayList<>();
         populateListFromFile("Student.txt");
     }
 
@@ -215,6 +215,7 @@ public class EditStudent extends javax.swing.JFrame {
             StudentData.usernameToDelete = fileList.getModel().getElementAt(selectedIndex);
             StudentData.passwordToEdit = passwords.get(selectedIndex);
             StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
+            StudentData.typeToEdit = assessmentType.get(selectedIndex);
             EditStudentDetails editstudentdetails = new EditStudentDetails();
             editstudentdetails.setVisible(true);
         } else {
@@ -251,18 +252,19 @@ public class EditStudent extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitBtnActionPerformed
 
-    public static void deleteLinesByUsername(String filename, String username) {
+    private static void deleteLinesByUsername(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder buffer = new StringBuilder();
             String line;
 
             while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("Username:" + username)) {
+                if (!line.startsWith("\"" + username + "\",")) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
-                    // Skip the next three lines as well
-                    reader.readLine(); // Skip Password line
-                    reader.readLine(); // Skip Intake code line
+                    // Skip the next four lines after finding the matching username
+                    for (int i = 0; i < 4; i++) {
+                        reader.readLine();
+                    }
                 }
             }
 
@@ -281,29 +283,25 @@ public class EditStudent extends javax.swing.JFrame {
         ArrayList<String> usernames = new ArrayList<>();
         passwords = new ArrayList<>(); // Initialize passwords ArrayList
         intakeCodes = new ArrayList<>();
+        assessmentType = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Username:")) {
-                    String username = line.substring("Username:".length()).trim();
-                    usernames.add(username);
-                } else if (line.startsWith("Password:")) {
-                    String password = line.substring("Password:".length()).trim();
-                    passwords.add(password); // Store the password in the ArrayList
-                } else if (line.startsWith("Intake code:")) {
-                    String[] parts = line.split(":");
-                    String intakeCode = parts[1].trim();
-                    intakeCodes.add(intakeCode);
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    usernames.add(parts[0].trim().replaceAll("^\"|\"$", ""));
+                    passwords.add(parts[1].trim().replaceAll("^\"|\"$", ""));
+                    intakeCodes.add(parts[2].trim().replaceAll("^\"|\"$", ""));
+                    assessmentType.add(parts[3].trim().replaceAll("^\"|\"$", ""));
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
 
-        // Convert ArrayList to array for JList
-        final String[] usernamesArray = new String[usernames.size()];
-
-        usernames.toArray(usernamesArray);
+        // Convert ArrayLists to arrays for JList
+        String[] usernamesArray = usernames.toArray(new String[0]);
 
         // Set the array as the data model for the JList
         fileList.setModel(

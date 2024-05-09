@@ -4,9 +4,10 @@
  */
 package projectmanagementsystem.Admin;
 
-import projectmanagementsystem.Admin.Admin;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -21,6 +22,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
     String usernameToDelete = StudentData.usernameToDelete;
     String passwordToEdit = StudentData.passwordToEdit;
     String intakeToEdit = StudentData.intakeToEdit;
+    String assessmentType = StudentData.typeToEdit;
 
     /**
      * Creates new form EditStudentDetails
@@ -183,7 +185,10 @@ public class EditStudentDetails extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
         String selectedValue = (String) IntakeCodeBox.getSelectedItem();
-        saveData(StudentNameTF.getText(), passwordTF.getText(), selectedValue);
+        saveData(StudentNameTF.getText(), passwordTF.getText(), selectedValue, assessmentType);
+        EditStudentDetails.this.setVisible(false);
+        Admin edt = new Admin();
+        edt.setVisible(true);
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void loadStudentDetails() {
@@ -192,36 +197,42 @@ public class EditStudentDetails extends javax.swing.JFrame {
         IntakeCodeBox.setSelectedItem(intakeToEdit);
     }
 
-    private void saveData(String usr, String pw, String intakeCode) {
-        try (RandomAccessFile raf = new RandomAccessFile("student.txt", "rw")) {
-            StringBuilder newData = new StringBuilder();
-            String line;
-            while ((line = raf.readLine()) != null) {
-                String trimmedLine = line.trim(); // Trim the line for comparison
-                if (trimmedLine.startsWith("Username:") && trimmedLine.substring("Username:".length()).trim().equals(usernameToDelete)) {
-                    // Skip the next two lines (Password and Intake code) to delete previous data
-                    raf.readLine(); // Skip Password line
-                    raf.readLine(); // Skip Intake code line
-                    newData.append("Username:").append(usr).append("\nPassword:").append(pw).append("\nIntake code:").append(intakeCode).append("\n");
+    public static void saveData(String usr, String pw, String intakeCode, String Type) {
+        StringBuilder fileContent = new StringBuilder();
 
+        try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String trimmedLine = line.trim();
+                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
+                    String[] parts = trimmedLine.split("\",\\s*\"");
+                    if (parts.length >= 4 && parts[0].equals("\"" + usr)) {
+                        fileContent.append("\"").append(usr).append("\", \"").append(pw).append("\", \"")
+                                .append(intakeCode).append("\", \"")
+                                .append(Type).append("\"\n");
+                    } else {
+                        fileContent.append(line).append("\n");
+                    }
+                    // Print out the values in the parts array
+                    System.out.println("First part: " + parts.length);
                 } else {
-                    newData.append(line).append("\n");
-                    System.out.println(line);
+                    fileContent.append(line).append("\n");
                 }
             }
-            raf.seek(0);
-            System.out.println(newData);
-            raf.writeBytes(newData.toString());
-            JOptionPane.showMessageDialog(EditStudentDetails.this, "Data Updated Successfully!");
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("student.txt"))) {
+                writer.write(fileContent.toString());
+                System.out.println("Data Updated Successfully!");
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }
+
         } catch (IOException e) {
-            System.err.println("Error reading or writing file: " + e.getMessage());
+            System.err.println("Error reading file: " + e.getMessage());
         }
-
-        EditStudentDetails.this.setVisible(false);
-        Admin edt = new Admin();
-        edt.setVisible(true);
-
     }
+
 
     /**
      * @param args the command line arguments

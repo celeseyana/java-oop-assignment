@@ -6,12 +6,9 @@ package projectmanagementsystem.Admin;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +19,8 @@ public class EditLecturerDetails extends javax.swing.JFrame {
     String usernameToDelete = LecturerData.usernameToDelete;
     String passwordToEdit = LecturerData.passwordToEdit;
     String projectManagerStatus = LecturerData.projectManagerStatus;
+    String supervisorStatus = LecturerData.supervisorStatus;
+    String secondMarkerStatus = LecturerData.secondMarkerStatus;
 
     /**
      * Creates new form EditStudentDetails
@@ -185,7 +184,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
         String selectedValue = (String) ProjectManagerBox.getSelectedItem();
-        saveData(LecturerNameTF.getText(), passwordTF.getText(), selectedValue);
+        saveData(LecturerNameTF.getText(), passwordTF.getText(), selectedValue, supervisorStatus, secondMarkerStatus);
         EditLecturerDetails.this.setVisible(false);
         Admin edt = new Admin();
         edt.setVisible(true);
@@ -201,7 +200,7 @@ public class EditLecturerDetails extends javax.swing.JFrame {
         }
     }
 
-    public static void saveData(String usr, String pw, String projectManagerStatus) {
+    public static void saveData(String usr, String pw, String projectManagerStatus, String supervisorStatus, String secondMarkerStatus) {
         StringBuilder fileContent = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("lecturer.txt"))) {
@@ -209,14 +208,18 @@ public class EditLecturerDetails extends javax.swing.JFrame {
 
             while ((line = reader.readLine()) != null) {
                 String trimmedLine = line.trim();
-                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\",")) {
+                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
                     String[] parts = trimmedLine.split("\",\\s*\"");
-                    if (parts.length >= 5 && parts[0].equals("\"" + usr + "\"")) {
+                    if (parts.length >= 5 && parts[0].equals("\"" + usr)) {
                         fileContent.append("\"").append(usr).append("\", \"").append(pw).append("\", \"")
-                                .append(projectManagerStatus).append("\", \"Not Assigned\", \"Not Assigned\"\n");
+                                .append(projectManagerStatus).append("\", \"")
+                                .append(supervisorStatus).append("\", \"")
+                                .append(secondMarkerStatus).append("\"\n");
                     } else {
                         fileContent.append(line).append("\n");
                     }
+                    // Print out the values in the parts array
+                    System.out.println("First part: " + parts[0]);
                 } else {
                     fileContent.append(line).append("\n");
                 }
@@ -232,7 +235,6 @@ public class EditLecturerDetails extends javax.swing.JFrame {
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
-
     }
 
     /**

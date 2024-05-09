@@ -12,4 +12,5 @@ public class StudentData {
         public static String usernameToDelete;
         public static String passwordToEdit;
         public static String intakeToEdit;
+        public static String typeToEdit;
 }
