@@ -218,8 +218,6 @@ public class EditLecturerDetails extends javax.swing.JFrame {
                     } else {
                         fileContent.append(line).append("\n");
                     }
-                    // Print out the values in the parts array
-                    System.out.println("First part: " + parts[0]);
                 } else {
                     fileContent.append(line).append("\n");
                 }

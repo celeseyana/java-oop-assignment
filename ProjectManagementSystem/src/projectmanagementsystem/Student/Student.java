@@ -34,7 +34,6 @@ public class Student extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ReportBtn = new javax.swing.JButton();
-        requestDateBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
         ExitBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -47,13 +46,6 @@ public class Student extends javax.swing.JFrame {
         ReportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReportBtnActionPerformed(evt);
-            }
-        });
-
-        requestDateBtn.setText("Request Presentation Date");
-        requestDateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestDateBtnActionPerformed(evt);
             }
         });
 
@@ -81,19 +73,15 @@ public class Student extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addContainerGap(59, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(ReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(requestDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -109,9 +97,7 @@ public class Student extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(requestDateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addGap(102, 102, 102)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BackBtn)
                     .addComponent(ExitBtn))
@@ -156,13 +142,6 @@ public class Student extends javax.swing.JFrame {
         login.setVisible(true);
         Student.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
-
-    private void requestDateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestDateBtnActionPerformed
-        // TODO add your handling code here:
-        RequestDate requestdate = new RequestDate();
-        requestdate.setVisible(true);
-        Student.this.setVisible(false);
-    }//GEN-LAST:event_requestDateBtnActionPerformed
 
     private void ReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportBtnActionPerformed
         // TODO add your handling code here:
@@ -214,6 +193,5 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton requestDateBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,5 @@
 
 
 
-Student:Ong Zi Yang
-id:10135
-Type:Internship
-Date:2024-05-08T18:46:15
-Link:https://moodle.AGH.edu.my/95a1f38e
+
+"Lai Weng Lok", "57441", "FYP", "2024-05-09T12:08:51", "https://moodle.AGH.edu.my/34887599", "Submitted", "Not Graded"

@@ -214,8 +214,6 @@ public class EditStudentDetails extends javax.swing.JFrame {
                     } else {
                         fileContent.append(line).append("\n");
                     }
-                    // Print out the values in the parts array
-                    System.out.println("First part: " + parts.length);
                 } else {
                     fileContent.append(line).append("\n");
                 }

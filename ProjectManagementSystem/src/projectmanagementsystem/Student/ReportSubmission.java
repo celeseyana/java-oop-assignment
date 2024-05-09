@@ -14,6 +14,7 @@ import java.io.RandomAccessFile;
 import projectmanagementsystem.Admin.StudentData;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,11 +30,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class ReportSubmission extends javax.swing.JFrame {
 
+    private ArrayList<String> globalid;
+    private ArrayList<String> globaltype;
+
     /**
      * Creates new form ReportSubmission
      */
     public ReportSubmission() {
         initComponents();
+        globalid = new ArrayList<>();
+        globaltype = new ArrayList<>();
         populateTable(StudentData.usernameToDelete);
 //        System.out.println("Discrepancies deleted successfully.");
     }
@@ -61,6 +67,7 @@ public final class ReportSubmission extends javax.swing.JFrame {
         AssessmentTable = new javax.swing.JTable();
         EditBtn = new javax.swing.JButton();
         DeleteBtn = new javax.swing.JButton();
+        dateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,23 +110,25 @@ public final class ReportSubmission extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(AddBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(BackBtn))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addGap(18, 18, 18))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addGap(83, 83, 83)))
-                                    .addComponent(jLabel5))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(83, 83, 83)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7)
-                                    .addComponent(jLabel6)))))
+                                    .addComponent(jLabel6)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(AddBtn)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(BackBtn)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jLabel1)))
@@ -139,10 +148,10 @@ public final class ReportSubmission extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddBtn)
                     .addComponent(BackBtn))
@@ -163,11 +172,23 @@ public final class ReportSubmission extends javax.swing.JFrame {
     jScrollPane1.setViewportView(AssessmentTable);
 
     EditBtn.setText("Edit");
+    EditBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            EditBtnActionPerformed(evt);
+        }
+    });
 
     DeleteBtn.setText("Delete");
     DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             DeleteBtnActionPerformed(evt);
+        }
+    });
+
+    dateBtn.setText("Request Presentation Date");
+    dateBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            dateBtnActionPerformed(evt);
         }
     });
 
@@ -183,27 +204,33 @@ public final class ReportSubmission extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(138, 138, 138))))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addContainerGap())
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addContainerGap(24, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(EditBtn)
-                .addComponent(DeleteBtn))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(16, 16, 16))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(EditBtn)
+                        .addComponent(DeleteBtn))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(dateBtn)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(16, 16, 16))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())))
     );
 
     pack();
@@ -232,14 +259,27 @@ public final class ReportSubmission extends javax.swing.JFrame {
                 Object value = AssessmentTable.getValueAt(selectedIndex, 0); // Assuming the first column is index 0 
                 String val = value.toString();
                 deleteLinesById("assessment.txt", val);
-                String filePath = "assessment.txt";
-                deleteSingleStudentLine(filePath);
                 JOptionPane.showMessageDialog(this, value + "'s data has been deleted successfully!");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please select a id to delete.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_DeleteBtnActionPerformed
+
+    private void dateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = AssessmentTable.getSelectedRow();
+        presentationData.assessmentID = globalid.get(selectedIndex);
+        presentationData.assessmentType = globaltype.get(selectedIndex);
+        RequestDate date = new RequestDate();
+        date.setVisible(true);
+    }//GEN-LAST:event_dateBtnActionPerformed
+
+    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
+        // TODO add your handling code here:
+        editReport edit = new editReport();
+        edit.setVisible(true);
+    }//GEN-LAST:event_EditBtnActionPerformed
 
     private static void deleteLinesById(String filename, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -248,7 +288,7 @@ public final class ReportSubmission extends javax.swing.JFrame {
             boolean skipNextLines = false;
 
             while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("id:" + id)) {
+                if (!line.startsWith("\"" + StudentData.usernameToDelete + "\", \"" + id)) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
                     skipNextLines = true; // Set flag to skip next lines after ID match
@@ -256,9 +296,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
 
                 if (skipNextLines) {
                     // Skip the next 4 lines assuming they are to be deleted
-                    reader.readLine();
-                    reader.readLine();
-                    reader.readLine();
                     reader.readLine();
                     skipNextLines = false; // Reset flag after skipping lines
                 }
@@ -275,48 +312,8 @@ public final class ReportSubmission extends javax.swing.JFrame {
         }
     }
 
-    private static void deleteSingleStudentLine(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            StringBuilder buffer = new StringBuilder();
-            String line;
-            boolean deleteLine = false;
-            boolean studentLineFound = false;
-
-            while ((line = reader.readLine()) != null) {
-                if (deleteLine) {
-                    deleteLine = false;
-                    continue;
-                }
-
-                if (line.startsWith("Student:")) {
-                    studentLineFound = true;
-                    String nextLine = reader.readLine(); // Read the next line
-                    if (nextLine == null || nextLine.trim().isEmpty()) {
-                        // If "Student:" line is not followed by another line, delete it
-                        deleteLine = true;
-                        continue;
-                    } else {
-                        buffer.append(line).append(System.lineSeparator());
-                        buffer.append(nextLine).append(System.lineSeparator());
-                    }
-                } else {
-                    buffer.append(line).append(System.lineSeparator());
-                }
-            }
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-                writer.write(buffer.toString());
-            } catch (IOException e) {
-                System.err.println("Error writing to file: " + e.getMessage());
-            }
-
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-        }
-    }
-
     void addAssessment(String type) {
-        Set<Integer> existingNumbers = readExistingNumbersFromFile();
+        Set<Integer> existingNumbers = readSecondElementsFromFile();
         Random random = new Random();
         int randomNumber;
         LocalDateTime currentTime = getCurrentTime();
@@ -337,12 +334,7 @@ public final class ReportSubmission extends javax.swing.JFrame {
                 raf.writeBytes("\r\n");
             }
 
-            raf.writeBytes("Student:" + StudentData.usernameToDelete + "\r\n");
-            raf.writeBytes("id:" + randomNumber + "\r\n");
-            raf.writeBytes("Type:" + type + "\r\n");
-            raf.writeBytes("Date:" + currentTime + "\r\n");
-            raf.writeBytes("Link:https://moodle.AGH.edu.my/" + code + "\r\n");
-
+            raf.writeBytes("\"" + StudentData.usernameToDelete + "\", \"" + randomNumber + "\", \"" + type + "\", \"" + currentTime + "\", \"https://moodle.AGH.edu.my/" + code + "\", \"Submitted\", \"Not Graded\"\n");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ReportSubmission.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -352,22 +344,28 @@ public final class ReportSubmission extends javax.swing.JFrame {
     }
 
     // checks if the id is taken or not
-    private static Set<Integer> readExistingNumbersFromFile() {
-        Set<Integer> existingNumbers = new HashSet<>();
+    private static Set<Integer> readSecondElementsFromFile() {
+        Set<Integer> secondElements = new HashSet<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("id:")) {
-                    int number = Integer.parseInt(line.substring(4).trim());
-                    existingNumbers.add(number);
+                if (!line.isEmpty()) {  // Skip empty lines
+                    String[] elements = line.split(",");  // Split line by comma
+                    for (int i = 0; i < elements.length; i++) {
+                        elements[i] = elements[i].trim().replaceAll("\"", "");
+                    }
+                    if (elements.length >= 2) {  // Check if there are at least 2 elements
+                        int number = Integer.parseInt(elements[1].trim());  // Parse second element as int
+                        secondElements.add(number);
+                    }
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading from file: " + e.getMessage());
         }
 
-        return existingNumbers;
+        return secondElements;
     }
 
     // formats the date time
@@ -379,27 +377,31 @@ public final class ReportSubmission extends javax.swing.JFrame {
 
     // populates the JTable from data in the text file
     public void populateTable(String usernameToDelete) {
+        globalid = new ArrayList<>();
+        globaltype = new ArrayList<>();
+
         DefaultTableModel model = (DefaultTableModel) AssessmentTable.getModel();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":", 2); // Split at the first occurrence of ":" only
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
 
                 // Check if the line contains data for the desired user
-                if (parts.length >= 2 && parts[0].trim().equals("Student")
-                        && parts[1].trim().equals(usernameToDelete)) {
-                    // Read the next lines to extract ID, Type, Date, and Link
-                    String idLine = getNextNonEmptyLine(reader);
-                    String typeLine = getNextNonEmptyLine(reader);
-                    String dateLine = getNextNonEmptyLine(reader);
-                    String linkLine = getNextNonEmptyLine(reader);
+                if (parts.length >= 7 && parts[0].equals("\"" + usernameToDelete)) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String id = parts[1];
+                    String type = parts[2];
+                    String date = parts[3];
+                    String link = parts[4];
+                    globalid.add(parts[1]);
+                    globaltype.add(parts[2]);
 
-                    // Split each line and extract the data if they contain ":" (e.g., "ID:12345")
-                    String id = extractValue(idLine);
-                    String type = extractValue(typeLine);
-                    String date = extractValue(dateLine);
-                    String link = extractValue(linkLine);
+                    // Remove double quotes from extracted values
+                    id = id.replaceAll("\"", "").trim();
+                    type = type.replaceAll("\"", "").trim();
+                    date = date.replaceAll("\"", "").trim();
+                    link = link.replaceAll("\"", "").trim();
 
                     // Create an array with the data and add it as a new row to the table
                     Object[] rowData = {id, type, date, link};
@@ -409,21 +411,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String getNextNonEmptyLine(BufferedReader reader) throws IOException {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (!line.trim().isEmpty()) {
-                return line;
-            }
-        }
-        return ""; // Return empty string if no more lines are available
-    }
-
-    private String extractValue(String line) {
-        String[] parts = line.split(":", 2);
-        return parts.length >= 2 ? parts[1].trim() : "";
     }
 
     /**
@@ -466,6 +453,7 @@ public final class ReportSubmission extends javax.swing.JFrame {
     private javax.swing.JButton DeleteBtn;
     private javax.swing.JButton EditBtn;
     private javax.swing.JComboBox<String> TypeBox;
+    private javax.swing.JButton dateBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -262,7 +262,6 @@ public class EditLecturer extends javax.swing.JFrame {
                 if (!line.startsWith("\"" + username + "\",")) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
-                    // Skip the next four lines after finding the matching username
                     for (int i = 0; i < 4; i++) {
                         reader.readLine();
                     }
