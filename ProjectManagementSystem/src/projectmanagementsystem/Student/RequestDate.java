@@ -4,17 +4,32 @@
  */
 package projectmanagementsystem.Student;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import projectmanagementsystem.Admin.Register;
+import projectmanagementsystem.Admin.StudentData;
+
 /**
  *
  * @author Tioh
  */
 public class RequestDate extends javax.swing.JFrame {
 
+    String id = presentationData.assessmentID;
+    String type = presentationData.assessmentType;
+
     /**
      * Creates new form RequestDate
      */
     public RequestDate() {
         initComponents();
+        idTF.setText(id);
+        TypeTF.setText(type);
     }
 
     /**
@@ -53,6 +68,11 @@ public class RequestDate extends javax.swing.JFrame {
         TypeTF.setEditable(false);
 
         SubmitBtn.setText("Submit");
+        SubmitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubmitBtnActionPerformed(evt);
+            }
+        });
 
         BackBtn.setText("Back");
         BackBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -98,16 +118,15 @@ public class RequestDate extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(idTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TypeTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCalendarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jCalendarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -140,6 +159,34 @@ public class RequestDate extends javax.swing.JFrame {
         // TODO add your handling code here:
         RequestDate.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void SubmitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitBtnActionPerformed
+        // TODO add your handling code here:
+        java.util.Date date = jCalendarComboBox.getDate(); // or java.time.LocalDate if using Java 8+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = sdf.format(date);
+        addRequestDate(StudentData.usernameToDelete, id, type, formattedDate);
+        JOptionPane.showMessageDialog(this, "Presentation Date has been Requested");
+    }//GEN-LAST:event_SubmitBtnActionPerformed
+
+    void addRequestDate(String usr, String ID, String type, String date) {
+        try {
+            int ln = 0;
+            RandomAccessFile raf = new RandomAccessFile("presentation.txt", "rw");
+            for (int i = 0; raf.readLine() != null; i++) {
+                ln++;
+            }
+            if (ln > 0) {
+                raf.writeBytes("\r\n");
+            }
+            raf.writeBytes("\"" + usr + "\", \"" + ID + "\", \"" + type + "\", \"" + date + "\"\n");
+            raf.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
