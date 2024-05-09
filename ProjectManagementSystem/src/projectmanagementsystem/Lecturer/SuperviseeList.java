@@ -32,7 +32,7 @@ public class SuperviseeList extends javax.swing.JFrame {
         Exitbtn1 = new javax.swing.JButton();
         superviseetext = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supervisee List");
 
         ListofSupervisees.setModel(new javax.swing.AbstractListModel<String>() {
@@ -91,7 +91,6 @@ public class SuperviseeList extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void Exitbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Exitbtn1ActionPerformed

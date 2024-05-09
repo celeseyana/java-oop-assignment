@@ -4,6 +4,11 @@
  */
 package projectmanagementsystem.Lecturer;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -15,6 +20,7 @@ public class PresentationRequests extends javax.swing.JFrame {
      */
     public PresentationRequests() {
         initComponents();
+        populateTable();
     }
 
     /**
@@ -31,9 +37,9 @@ public class PresentationRequests extends javax.swing.JFrame {
         rejectBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        requestTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Presentation Requests");
@@ -59,18 +65,15 @@ public class PresentationRequests extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        requestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"test", "01/02/2024", "11:30 am"},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Student Name", "Date", "Slot"
+                "Student Name", "ID", "Type", "Date"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(requestTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,7 +116,6 @@ public class PresentationRequests extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -129,6 +131,23 @@ public class PresentationRequests extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rejectBtnActionPerformed
 
+    public void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) requestTable.getModel();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\""); // Assuming data is comma-separated
+                // Assuming the line structure is: Student Name, ID, Assessment Type, Date, Submission Link
+                if (parts.length == 4) {
+                    model.addRow(parts);
+                    
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -169,7 +188,7 @@ public class PresentationRequests extends javax.swing.JFrame {
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton rejectBtn;
+    private javax.swing.JTable requestTable;
     // End of variables declaration//GEN-END:variables
 }

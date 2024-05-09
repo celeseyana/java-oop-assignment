@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import projectmanagementsystem.Admin.StudentData;
+import projectmanagementsystem.Admin.LecturerData;
+import projectmanagementsystem.Lecturer.LecturerDashboard;
 import projectmanagementsystem.Student.Student;
 
 /**
@@ -194,6 +196,11 @@ public class Login extends javax.swing.JFrame {
             // insert student class here
         } else if (loginAsLecturer(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
+            LecturerData.usernameToDelete = username;
+            LecturerDashboard lecturer = new LecturerDashboard();
+            lecturer.setVisible(true);
+            Login.this.setVisible(false);
+            
             // insert lecturer class here
         } else if (username.equals("Admin") && (password.equals("Admin123"))) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);

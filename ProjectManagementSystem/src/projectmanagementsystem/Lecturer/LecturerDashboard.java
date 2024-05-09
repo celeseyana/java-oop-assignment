@@ -4,19 +4,24 @@
  */
 package projectmanagementsystem.Lecturer;
 
+
 import java.awt.event.ActionListener;
+import projectmanagementsystem.Admin.LecturerData;
 
 /**
  *
  * @author User
  */
 public class LecturerDashboard extends javax.swing.JFrame {
+    
+    String lecturername = LecturerData.usernameToDelete;
 
     /**
      * Creates new form Lecturer
      */
     public LecturerDashboard() {
         initComponents();
+        jLabel2.setText("Welcome back, " + lecturername + "!");
     }
 
     /**
@@ -36,6 +41,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         presentationRbtn = new javax.swing.JButton();
         evalRepbtn = new javax.swing.JButton();
         superviseeListbtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -75,6 +81,8 @@ public class LecturerDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Welcome back, lecturer!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -86,11 +94,17 @@ public class LecturerDashboard extends javax.swing.JFrame {
                     .addComponent(evalRepbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(presentationRbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(54, 54, 54)
                 .addComponent(presentationRbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(evalRepbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,7 +146,6 @@ public class LecturerDashboard extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -198,6 +211,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
