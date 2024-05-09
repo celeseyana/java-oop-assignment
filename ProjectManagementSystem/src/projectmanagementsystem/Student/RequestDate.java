@@ -166,7 +166,8 @@ public class RequestDate extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = sdf.format(date);
         addRequestDate(StudentData.usernameToDelete, id, type, formattedDate);
-        JOptionPane.showMessageDialog(this, "Presentation Date has been Requested");
+        JOptionPane.showMessageDialog(this, "Presentation Date has been Requested!");
+        RequestDate.this.setVisible(false);
     }//GEN-LAST:event_SubmitBtnActionPerformed
 
     void addRequestDate(String usr, String ID, String type, String date) {
