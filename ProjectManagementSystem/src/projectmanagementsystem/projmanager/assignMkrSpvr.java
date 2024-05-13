@@ -4,17 +4,38 @@
  */
 package projectmanagementsystem.projmanager;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
  */
 public class assignMkrSpvr extends javax.swing.JFrame {
 
+    private ArrayList<String> globalname;
+    private ArrayList<String> globalid;
+    private ArrayList<String> globalprojmgrBool;
+    private ArrayList<String> globalspvs;
+    private ArrayList<String> globalsecmark;
+
     /**
      * Creates new form main
      */
     public assignMkrSpvr() {
         initComponents();
+        globalname = new ArrayList<>();
+        globalid = new ArrayList<>();
+        globalprojmgrBool = new ArrayList<>();
+        globalspvs = new ArrayList<>();
+        globalsecmark = new ArrayList<>();
+        assignMkrTable();
     }
 
     /**
@@ -53,16 +74,20 @@ public class assignMkrSpvr extends javax.swing.JFrame {
 
         availabilityTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Name", "Supervisor", "Second Marker"
+                "Name", "ID", "Project Manager", "Supervisor", "Second Marker"
             }
         ));
         jScrollPane1.setViewportView(availabilityTable);
+        if (availabilityTable.getColumnModel().getColumnCount() > 0) {
+            availabilityTable.getColumnModel().getColumn(0).setHeaderValue("Name");
+            availabilityTable.getColumnModel().getColumn(1).setHeaderValue("ID");
+            availabilityTable.getColumnModel().getColumn(2).setHeaderValue("Project Manager");
+            availabilityTable.getColumnModel().getColumn(3).setHeaderValue("Supervisor");
+            availabilityTable.getColumnModel().getColumn(4).setHeaderValue("Second Marker");
+        }
 
         backBtn1.setText("Back");
         backBtn1.addActionListener(new java.awt.event.ActionListener() {
@@ -122,11 +147,44 @@ public class assignMkrSpvr extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void assignSpvrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignSpvrBtnActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) availabilityTable.getModel();
+        int selectedIndex = availabilityTable.getSelectedRow();
+        String name = (String) model.getValueAt(selectedIndex, 0);
+        String id = (String) model.getValueAt(selectedIndex, 1);
+        String projmgrBool = (String) model.getValueAt(selectedIndex, 2);
+        String secmark = (String) model.getValueAt(selectedIndex, 4);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to assign" + name + " as Supervisor?");
+        if (choice == JOptionPane.YES_OPTION) {
+            if (checkStatus(secmark) == false) {
+                model.setValueAt("True", selectedIndex, 3);
+                String spvs2 = (String) model.getValueAt(selectedIndex, 3);
+                textSave(name, id, projmgrBool, spvs2, secmark);
+                JOptionPane.showMessageDialog(this, "Assigned Successfully");
+            } else {
+                JOptionPane.showMessageDialog(this, name + " is already a second marker!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_assignSpvrBtnActionPerformed
 
     private void assignMarkerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignMarkerBtnActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) availabilityTable.getModel();
+        int selectedIndex = availabilityTable.getSelectedRow();
+        String name = (String) model.getValueAt(selectedIndex, 0);
+        String id = (String) model.getValueAt(selectedIndex, 1);
+        String projmgrBool = (String) model.getValueAt(selectedIndex, 2);
+        String spvs = (String) model.getValueAt(selectedIndex, 3);
+
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to assign" + name + " as Second Marker?");
+        if (choice == JOptionPane.YES_OPTION) {
+            if (checkStatus(spvs) == false) {
+                model.setValueAt("True", selectedIndex, 4);
+                String secmark2 = (String) model.getValueAt(selectedIndex, 4);
+                textSave(name, id, projmgrBool, spvs, secmark2);
+                JOptionPane.showMessageDialog(this, "Assigned Successfully");
+            } else {
+                JOptionPane.showMessageDialog(this, name + " is already a supervisor!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_assignMarkerBtnActionPerformed
 
     private void backBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtn1ActionPerformed
@@ -134,6 +192,95 @@ public class assignMkrSpvr extends javax.swing.JFrame {
         homepageFrame.setVisible(true);
         assignMkrSpvr.this.setVisible(false);
     }//GEN-LAST:event_backBtn1ActionPerformed
+
+    static boolean checkStatus(String status) {
+        if (status.equalsIgnoreCase("True")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void textSave(String name, String id, String projmgrBool, String spvs, String secmark) {
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("lecturer.txt"))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String trimmedLine = line.trim();
+                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
+                    String[] parts = trimmedLine.split("\",\\s*\"");
+                    if (parts.length >= 5 && parts[0].equals("\"" + name)) {
+                        fileContent.append("\"").append(name).append("\", \"").append(id).append("\", \"")
+                                .append(projmgrBool).append("\", \"")
+                                .append(spvs).append("\", \"")
+                                .append(secmark).append("\"\n");
+                    } else {
+                        fileContent.append(line).append("\n");
+                    }
+                } else {
+                    fileContent.append(line).append("\n");
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("lecturer.txt"))) {
+                writer.write(fileContent.toString());
+                System.out.println("Data Updated Successfully!");
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    public void assignMkrTable() {
+        globalname = new ArrayList<>();
+        globalid = new ArrayList<>();
+        globalprojmgrBool = new ArrayList<>();
+        globalspvs = new ArrayList<>();
+        globalsecmark = new ArrayList<>();
+
+        DefaultTableModel model = (DefaultTableModel) availabilityTable.getModel();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("lecturer.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+
+                // Check if the line contains data for the desired user
+                if (parts.length >= 5) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String name = parts[0];
+                    String id = parts[1];
+                    String projmgrBool = parts[2];
+                    String spvs = parts[3];
+                    String secmark = parts[4];
+
+                    globalname.add(parts[0]);
+                    globalid.add(parts[1]);
+                    globalprojmgrBool.add(parts[2]);
+                    globalspvs.add(parts[3]);
+                    globalsecmark.add(parts[4]);
+
+                    // Remove double quotes from extracted values
+                    name = name.replaceAll("\"", "").trim();
+                    id = id.replaceAll("\"", "").trim();
+                    projmgrBool = projmgrBool.replaceAll("\"", "").trim();
+                    spvs = spvs.replaceAll("\"", "").trim();
+                    secmark = secmark.replaceAll("\"", "").trim();
+
+                    // Create an array with the data and add it as a new row to the table
+                    Object[] rowData = {name, id, projmgrBool, spvs, secmark};
+                    model.addRow(rowData);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments

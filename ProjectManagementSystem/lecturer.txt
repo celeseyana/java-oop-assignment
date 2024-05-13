@@ -1,1 +1,2 @@
-"Tham Hoong Ching", "54321", "Yes", "Not Assigned", "Not Assigned"
+"Tham Hoong Ching", "54321", "Yes", "True", "False"
+"ur mum", "12345", "Yes", "False", "True"
