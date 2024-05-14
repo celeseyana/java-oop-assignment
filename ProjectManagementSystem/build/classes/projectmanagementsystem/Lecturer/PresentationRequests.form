@@ -36,7 +36,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="rejectBtn" max="32767" attributes="0"/>
-                          <Component id="approveBtn" max="32767" attributes="0"/>
+                          <Component id="confirmBtn" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -57,7 +57,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="approveBtn" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="confirmBtn" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       <Component id="rejectBtn" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="282" max="-2" attributes="0"/>
@@ -79,12 +79,12 @@
         <Property name="text" type="java.lang.String" value="Presentation Requests"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="approveBtn">
+    <Component class="javax.swing.JButton" name="confirmBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Approve"/>
+        <Property name="text" type="java.lang.String" value="Confirm"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="approveBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="rejectBtn">
