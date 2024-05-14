@@ -5,8 +5,14 @@
 package projectmanagementsystem.Lecturer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,7 +39,7 @@ public class PresentationRequests extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        approveBtn = new javax.swing.JButton();
+        confirmBtn = new javax.swing.JButton();
         rejectBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -44,10 +50,10 @@ public class PresentationRequests extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Presentation Requests");
 
-        approveBtn.setText("Approve");
-        approveBtn.addActionListener(new java.awt.event.ActionListener() {
+        confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                approveBtnActionPerformed(evt);
+                confirmBtnActionPerformed(evt);
             }
         });
 
@@ -91,7 +97,7 @@ public class PresentationRequests extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rejectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(approveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(confirmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -106,7 +112,7 @@ public class PresentationRequests extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addComponent(rejectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(282, 282, 282)
@@ -123,12 +129,103 @@ public class PresentationRequests extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_approveBtnActionPerformed
+        int selectedRow = requestTable.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow != -1) {
+          // Get data from selected row (assuming columns 0-3)
+          String sName = (String) requestTable.getValueAt(selectedRow, 0);
+          String id = (String) requestTable.getValueAt(selectedRow, 1);
+          String type = (String) requestTable.getValueAt(selectedRow, 2);
+          String date = (String) requestTable.getValueAt(selectedRow, 3);
+
+          // Confirmation prompt
+          int confirmation = JOptionPane.showConfirmDialog(this,
+              "Are you sure you want to confirm the presentation request from " + sName + "?",
+              "Confirmation", JOptionPane.YES_NO_OPTION);
+
+          if (confirmation == JOptionPane.YES_OPTION) {
+            // Build approval data string with double quotes, commas, and trailing spaces
+            String approveData = "\"" + sName + "\"" + ", \"" + id + "\"" + ", \"" + type + "\"" + ", \"" + date + "\"" + System.lineSeparator() + System.lineSeparator();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("approved.txt", true))) {
+              writer.write(approveData);
+              JOptionPane.showMessageDialog(this, "Presentation request confirmed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(this, "Error writing to approved.txt!", "Error", JOptionPane.ERROR_MESSAGE);
+              return;
+            }
+          }
+        } else {
+          JOptionPane.showMessageDialog(this, "Please select a presentation request to confirm!", "Selection Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = requestTable.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow != -1) {
+          // Get selected student name (assuming column 0) for confirmation
+          String selectedStudent = (String) requestTable.getValueAt(selectedRow, 0);
+
+          // Confirmation prompt
+          int confirmation = JOptionPane.showConfirmDialog(this,
+              "Are you sure you want to reject the presentation request from " + selectedStudent + "?",
+              "Reject Confirmation", JOptionPane.YES_NO_OPTION);
+
+          if (confirmation == JOptionPane.YES_OPTION) {
+            // Maintain a list of lines from the file
+            List<String> presentationLines;
+
+            // Read the entire presentation.txt file into the list
+            try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
+              presentationLines = reader.lines().collect(Collectors.toList());
+            } catch (IOException e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(this, "Error reading presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
+              return;
+            }
+
+            // Find the line to remove based on student ID (assuming ID is in column 1)
+            int lineToRemove = -1;
+            for (int i = 0; i < presentationLines.size(); i++) {
+              String[] parts = presentationLines.get(i).split("\",\\s*\"");
+              if (parts.length >= 2 && parts[1].equals(requestTable.getValueAt(selectedRow, 1))) {
+                lineToRemove = i;
+                break;
+              }
+            }
+
+            // Remove the line from the list if found
+            if (lineToRemove != -1) {
+              presentationLines.remove(lineToRemove);
+            }
+
+            // Rewrite the presentation.txt file with the updated list
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("presentation.txt"))) {
+              for (String line : presentationLines) {
+                writer.write(line + System.lineSeparator());
+              }
+            } catch (IOException e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(this, "Error writing presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
+              return;
+            }
+
+            // Update the table model
+            DefaultTableModel model = (DefaultTableModel) requestTable.getModel();
+            model.removeRow(selectedRow);
+
+            JOptionPane.showMessageDialog(this, "Presentation request rejected successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+          }
+        } else {
+          JOptionPane.showMessageDialog(this, "Please select a presentation request to reject!", "Selection Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_rejectBtnActionPerformed
 
     public void populateTable() {
@@ -137,11 +234,25 @@ public class PresentationRequests extends javax.swing.JFrame {
         try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\",\\s*\""); // Assuming data is comma-separated
-                // Assuming the line structure is: Student Name, ID, Assessment Type, Date, Submission Link
-                if (parts.length == 4) {
-                    model.addRow(parts);
-                    
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+
+                // Check if the line contains data for the desired user
+                if (parts.length >= 4) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String sName = parts[0];
+                    String id = parts[1];
+                    String type = parts[2];
+                    String date = parts[3];
+
+                    // Remove double quotes from extracted values
+                    sName = sName.replaceAll("\"", "").trim();
+                    id = id.replaceAll("\"", "").trim();
+                    type = type.replaceAll("\"", "").trim();
+                    date = date.replaceAll("\"", "").trim();
+
+                    // Create an array with the data and add it as a new row to the table
+                    Object[] rowData = {sName, id, type, date};
+                    model.addRow(rowData);
                 }
             }
         } catch (IOException e) {
@@ -174,6 +285,9 @@ public class PresentationRequests extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PresentationRequests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -184,8 +298,8 @@ public class PresentationRequests extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton approveBtn;
     private javax.swing.JButton backBtn;
+    private javax.swing.JButton confirmBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton rejectBtn;

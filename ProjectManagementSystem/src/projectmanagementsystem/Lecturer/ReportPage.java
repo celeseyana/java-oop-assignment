@@ -100,11 +100,27 @@ public class ReportPage extends javax.swing.JFrame {
         try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\",\\s*\""); // Assuming data is comma-separated
-                // Assuming the line structure is: Student Name, ID, Assessment Type, Date, Submission Link
-                if (parts.length == 7) {
-                    model.addRow(parts);
-                    
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+
+                // Check if the line contains data for the desired user
+                if (parts.length >= 7) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String name = parts[0];
+                    String id = parts[1];
+                    String type = parts[2];
+                    String date = parts[3];
+                    String link = parts[4];
+
+                    // Remove double quotes from extracted values
+                    name = name.replaceAll("\"", "").trim();
+                    id = id.replaceAll("\"", "").trim();
+                    type = type.replaceAll("\"", "").trim();
+                    date = date.replaceAll("\"", "").trim();
+                    link = link.replaceAll("\"", "").trim();
+
+                    // Create an array with the data and add it as a new row to the table
+                    Object[] rowData = {name, id, type, date, link};
+                    model.addRow(rowData);
                 }
             }
         } catch (IOException e) {
@@ -136,6 +152,7 @@ public class ReportPage extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ReportPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
