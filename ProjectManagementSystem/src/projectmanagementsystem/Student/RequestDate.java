@@ -179,7 +179,7 @@ public class RequestDate extends javax.swing.JFrame {
             if (ln > 0) {
                 raf.writeBytes("\r\n");
             }
-            raf.writeBytes("\"" + usr + "\", \"" + ID + "\", \"" + type + "\", \"" + date + "\"\n");
+            raf.writeBytes("\"" + usr + "\", \"" + ID + "\", \"" + type + "\", \"" + date + "\", \"" + "Not Approved" + "\"\n");
             raf.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
