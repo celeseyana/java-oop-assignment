@@ -13,6 +13,7 @@ import projectmanagementsystem.Admin.StudentData;
 import projectmanagementsystem.Admin.LecturerData;
 import projectmanagementsystem.Lecturer.LecturerDashboard;
 import projectmanagementsystem.Student.Student;
+import projectmanagementsystem.projmanager.homepageprojmanager;
 
 /**
  *
@@ -52,6 +53,38 @@ public class Login extends javax.swing.JFrame {
             System.err.println("Error reading file: " + e.getMessage());
         }
         return false; // Credentials not found or file error
+    }
+
+    public static int checkLECCredentials(String file, String username, String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            String storedUsername = null;
+            String storedPassword = null;
+            String thirdPart = null;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("\"") && line.endsWith("\"") && line.contains(username)) {
+                    storedUsername = line.split(",")[0].trim().replace("\"", "");
+
+                    String[] parts = line.split(",");
+                    if (parts.length >= 2) {
+                        storedPassword = parts[1].trim().replace("\"", "");
+                    }
+                    if (parts.length >= 3) {
+                        thirdPart = parts[2].trim().replace("\"", "");
+                    }
+                }
+            }
+            if (storedUsername != null && storedPassword != null && storedUsername.equals(username) && storedPassword.equals(password)) {
+                if ("Yes".equalsIgnoreCase(thirdPart)) {
+                    return 2; // Credentials match and third part is "True"
+                } else {
+                    return 1; // Credentials match and third part is not "True"
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        return 0; // Credentials not found or file error
     }
 
     /**
@@ -186,6 +219,8 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tfusr.getText();
         String password = tfpassword.getText();
+        int loginResult = checkLECCredentials(LECTURER_FILE, username, password);
+        System.out.println(loginResult);
         if (loginAsStudent(username, password)) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
             StudentData.usernameToDelete = username;
@@ -194,30 +229,39 @@ public class Login extends javax.swing.JFrame {
             Login.this.setVisible(false);
 
             // insert student class here
-        } else if (loginAsLecturer(username, password)) {
+        } else if (loginResult == 1) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
             LecturerData.usernameToDelete = username;
             LecturerDashboard lecturer = new LecturerDashboard();
             lecturer.setVisible(true);
             Login.this.setVisible(false);
-            
+
+        } else if (loginResult == 2) {
+            JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
+            LecturerData.usernameToDelete = username;
+            homepageprojmanager homepage = new homepageprojmanager();
+            homepage.setVisible(true);
+            Login.this.setVisible(false);
+
             // insert lecturer class here
         } else if (username.equals("Admin") && (password.equals("Admin123"))) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
             Admin admin = new Admin();
             admin.setVisible(true);
             Login.this.setVisible(false);
+
         } else {
             JOptionPane.showMessageDialog(Login.this, "Login failed. Invalid credentials.");
         }
+
     }// GEN-LAST:event_SubmitBtnActionPerformed
 
     public static boolean loginAsStudent(String username, String password) {
         return checkCredentials(STUDENT_FILE, username, password);
     }
 
-    public static boolean loginAsLecturer(String username, String password) {
-        return checkCredentials(LECTURER_FILE, username, password);
+    public static int loginAsLecturer(String username, String password) {
+        return checkLECCredentials(LECTURER_FILE, username, password);
     }
 
     /**

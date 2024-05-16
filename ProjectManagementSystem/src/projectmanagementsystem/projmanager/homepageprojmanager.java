@@ -4,6 +4,8 @@
  */
 package projectmanagementsystem.projmanager;
 
+import projectmanagementsystem.Admin.LecturerData;
+
 /**
  *
  * @author User
@@ -15,6 +17,7 @@ public class homepageprojmanager extends javax.swing.JFrame {
      */
     public homepageprojmanager() {
         initComponents();
+        welcomeText.setText("Welcome, " + LecturerData.usernameToDelete + "!");
     }
 
     /**
