@@ -6,9 +6,12 @@ package projectmanagementsystem.Lecturer;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -131,36 +134,13 @@ public class PresentationRequests extends javax.swing.JFrame {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
-        int selectedRow = requestTable.getSelectedRow();
-
-        // Check if a row is selected
-        if (selectedRow != -1) {
-          // Get data from selected row (assuming columns 0-3)
-          String sName = (String) requestTable.getValueAt(selectedRow, 0);
-          String id = (String) requestTable.getValueAt(selectedRow, 1);
-          String type = (String) requestTable.getValueAt(selectedRow, 2);
-          String date = (String) requestTable.getValueAt(selectedRow, 3);
-
-          // Confirmation prompt
-          int confirmation = JOptionPane.showConfirmDialog(this,
-              "Are you sure you want to confirm the presentation request from " + sName + "?",
-              "Confirmation", JOptionPane.YES_NO_OPTION);
-
-          if (confirmation == JOptionPane.YES_OPTION) {
-            // Build approval data string with double quotes, commas, and trailing spaces
-            String approveData = "\"" + sName + "\"" + ", \"" + id + "\"" + ", \"" + type + "\"" + ", \"" + date + "\"" + System.lineSeparator() + System.lineSeparator();
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("approved.txt", true))) {
-              writer.write(approveData);
-              JOptionPane.showMessageDialog(this, "Presentation request confirmed!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException e) {
-              e.printStackTrace();
-              JOptionPane.showMessageDialog(this, "Error writing to approved.txt!", "Error", JOptionPane.ERROR_MESSAGE);
-              return;
-            }
-          }
+        int selectedIndex = requestTable.getSelectedRow();
+        if (selectedIndex != -1) {
+            String assessmentId = requestTable.getValueAt(selectedIndex, 0).toString();
+            updatePresentationStatus(assessmentId, "Approved");
+            JOptionPane.showMessageDialog(this, "Presentation has been approved.");
         } else {
-          JOptionPane.showMessageDialog(this, "Please select a presentation request to confirm!", "Selection Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a presentation request to approve.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
@@ -170,7 +150,7 @@ public class PresentationRequests extends javax.swing.JFrame {
 
         // Check if a row is selected
         if (selectedRow != -1) {
-          // Get selected student name (assuming column 0) for confirmation
+          // Get selected student name for confirmation
           String selectedStudent = (String) requestTable.getValueAt(selectedRow, 0);
 
           // Confirmation prompt
@@ -191,7 +171,7 @@ public class PresentationRequests extends javax.swing.JFrame {
               return;
             }
 
-            // Find the line to remove based on student ID (assuming ID is in column 1)
+            // Find the line to remove based on student ID
             int lineToRemove = -1;
             for (int i = 0; i < presentationLines.size(); i++) {
               String[] parts = presentationLines.get(i).split("\",\\s*\"");
@@ -217,7 +197,7 @@ public class PresentationRequests extends javax.swing.JFrame {
               return;
             }
 
-            // Update the table model
+            // Update table 
             DefaultTableModel model = (DefaultTableModel) requestTable.getModel();
             model.removeRow(selectedRow);
 
@@ -259,6 +239,33 @@ public class PresentationRequests extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    private void updatePresentationStatus(String assessmentId, String newStatus) {
+        File inputFile = new File("presentation.txt");
+        ArrayList<String> fileContent = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("\"" + assessmentId + "\"") && line.contains("\"Not Approved\"")) {
+                    line = line.replace("Not Approved", newStatus);
+                }
+                fileContent.add(line);
+            }
+        } catch (IOException e) {
+            Logger.getLogger(PresentationRequests.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(inputFile))) {
+            for (String line : fileContent) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            Logger.getLogger(PresentationRequests.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -284,6 +291,10 @@ public class PresentationRequests extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PresentationRequests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

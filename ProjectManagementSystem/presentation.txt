@@ -1,1 +1,1 @@
-"Lai Weng Lok", "57441", "FYP", "31-05-2024", "Not Approved"
+"Lai Weng Lok", "57441", "FYP", "31-05-2024", "Approved"

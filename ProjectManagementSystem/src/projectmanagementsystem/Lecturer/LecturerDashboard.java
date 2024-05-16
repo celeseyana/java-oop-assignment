@@ -228,34 +228,38 @@ public class LecturerDashboard extends javax.swing.JFrame {
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) presTable.getModel();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("approved.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
 
                 // Check if the line contains data for the desired user
-                if (parts.length >= 4) {
-                    // Extract data for ID, Type, Date, and Link from the parts array
+                if (parts.length >= 5) { 
                     String name = parts[0];
                     String id = parts[1];
                     String type = parts[2];
                     String date = parts[3];
+                    String status = parts[4]; 
 
                     // Remove double quotes from extracted values
                     name = name.replaceAll("\"", "").trim();
                     id = id.replaceAll("\"", "").trim();
                     type = type.replaceAll("\"", "").trim();
                     date = date.replaceAll("\"", "").trim();
+                    status = status.replaceAll("\"", "").trim();
 
-                    // Create an array with the data and add it as a new row to the table
-                    Object[] rowData = {name, id, type, date};
-                    model.addRow(rowData);
+                    // Only add the row if the status is "Approved"
+                    if ("Approved".equalsIgnoreCase(status)) {
+                        Object[] rowData = {name, id, type, date};
+                        model.addRow(rowData);
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }   
+    }
+ 
     /**
      * @param args the command line arguments
      */
@@ -281,6 +285,38 @@ public class LecturerDashboard extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LecturerDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
