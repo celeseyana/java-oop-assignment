@@ -4,17 +4,39 @@
  */
 package projectmanagementsystem.projmanager;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static projectmanagementsystem.projmanager.assignMkrSpvr.checkStatus;
+import static projectmanagementsystem.projmanager.assignMkrSpvr.textSave;
+
 /**
  *
  * @author User
  */
 public class studentAssign extends javax.swing.JFrame {
 
+    private ArrayList<String> globalname;
+    private ArrayList<String> globalpassword;
+    private ArrayList<String> globalintake;
+    private ArrayList<String> globalassessment;
+
     /**
      * Creates new form reportviewFrame
      */
     public studentAssign() {
         initComponents();
+        globalname = new ArrayList<>();
+        globalpassword = new ArrayList<>();
+        globalintake = new ArrayList<>();
+        globalassessment = new ArrayList<>();
+        assignStudentTable();
     }
 
     /**
@@ -42,13 +64,10 @@ public class studentAssign extends javax.swing.JFrame {
 
         studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Username", "Intake Code"
+                "Name", "Intake Code", "Assessment"
             }
         ));
         jScrollPane1.setViewportView(studentTable);
@@ -94,7 +113,28 @@ public class studentAssign extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void assignStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignStudentBtnActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) studentTable.getModel();
+        int selectedIndex = studentTable.getSelectedRow();
+
+        String name = (String) model.getValueAt(selectedIndex, 0);
+        String intake = (String) model.getValueAt(selectedIndex, 1);
+        String password = globalpassword.get(selectedIndex);
+
+        String[] assessmentType = {"Internship", "Investigation Report", "CP1", "CP2", "RMCP", "FYP"};
+
+        Object choice = JOptionPane.showInputDialog(this, "Choose", "Menu", JOptionPane.PLAIN_MESSAGE, null, assessmentType, assessmentType[0]);
+        if (choice != null) {
+            String choiceString = choice.toString();
+            String assessment = choiceString;
+            int meow = JOptionPane.showConfirmDialog(this, "Are you sure you want to assign this option type?");
+            if (meow == JOptionPane.YES_OPTION) {
+                textSave(name, password, intake, assessment);
+                JOptionPane.showMessageDialog(this, "Assigned Successfully");
+            }
+
+        }
+
+
     }//GEN-LAST:event_assignStudentBtnActionPerformed
 
     private void backBtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtn4ActionPerformed
@@ -102,6 +142,90 @@ public class studentAssign extends javax.swing.JFrame {
         homepageFrame.setVisible(true);
         studentAssign.this.setVisible(false);
     }//GEN-LAST:event_backBtn4ActionPerformed
+
+    static boolean checkStatus(String status) {
+        if (status.equalsIgnoreCase("null")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void textSave(String name, String password, String intake, String assessment) {
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String trimmedLine = line.trim();
+                if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
+                    String[] parts = trimmedLine.split("\",\\s*\"");
+                    if (parts.length >= 4 && parts[0].equals("\"" + name)) {
+                        fileContent.append("\"").append(name).append("\", \"").append(password).append("\", \"")
+                                .append(intake).append("\", \"")
+                                .append(assessment).append("\"\n");
+                    } else {
+                        fileContent.append(line).append("\n");
+                    }
+                } else {
+                    fileContent.append(line).append("\n");
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("student.txt"))) {
+                writer.write(fileContent.toString());
+                System.out.println("Data Updated Successfully!");
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+    }
+
+    public void assignStudentTable() {
+        globalname = new ArrayList<>();
+        globalpassword = new ArrayList<>();
+        globalintake = new ArrayList<>();
+        globalassessment = new ArrayList<>();
+
+        DefaultTableModel model = (DefaultTableModel) studentTable.getModel();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+
+                // Check if the line contains data for the desired user
+                if (parts.length >= 4) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String name = parts[0];
+                    String password = parts[1];
+                    String intake = parts[2];
+                    String assessment = parts[3];
+
+                    globalname.add(parts[0]);
+                    globalpassword.add(parts[1]);
+                    globalintake.add(parts[2]);
+                    globalassessment.add(parts[3]);
+
+                    // Remove double quotes from extracted values
+                    name = name.replaceAll("\"", "").trim();
+                    password = password.replaceAll("\"", "").trim();
+                    intake = intake.replaceAll("\"", "").trim();
+                    assessment = assessment.replaceAll("\"", "").trim();
+
+                    // Create an array with the data and add it as a new row to the table
+                    Object[] rowData = {name, intake, assessment};
+                    model.addRow(rowData);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
