@@ -1,5 +1,2 @@
 "Lai Weng Lok", "57441", "FYP", "2024-05-09T12:08:51", "https://moodle.AGH.edu.my/34887599", "Submitted", ""Graded"
-"null", "26489", "Internship", "2024-05-09T16:58:12", "https://moodle.AGH.edu.my/96a654a7", "Submitted", ""Graded"
-"null", "13216", "CP1", "2024-05-09T19:43:52", "https://moodle.AGH.edu.my/4d620e86", "Submitted", ""Graded"
-"null", "85366", "Internship", "2024-05-21T17:54:34", "https://moodle.AGH.edu.my/5c8c7faf", "Submitted", ""Not Graded"
-"null", "89436", "Internship", "2024-05-21T18:04:37", "https://moodle.AGH.edu.my/19811b54", "Submitted", ""Not Graded"
+"Ong Zi Yang", "86427", "FYP", "2024-05-21T21:21:18", "https://moodle.AGH.edu.my/f5f316ae", "Submitted", ""B+"

@@ -65,7 +65,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         AssessmentTable = new javax.swing.JTable();
-        EditBtn = new javax.swing.JButton();
         DeleteBtn = new javax.swing.JButton();
         dateBtn = new javax.swing.JButton();
 
@@ -171,13 +170,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
     );
     jScrollPane1.setViewportView(AssessmentTable);
 
-    EditBtn.setText("Edit");
-    EditBtn.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            EditBtnActionPerformed(evt);
-        }
-    });
-
     DeleteBtn.setText("Delete");
     DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,12 +198,9 @@ public final class ReportSubmission extends javax.swing.JFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(dateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(EditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(dateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                        .addComponent(DeleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGap(138, 138, 138))))
     );
     layout.setVerticalGroup(
@@ -220,9 +209,7 @@ public final class ReportSubmission extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(EditBtn)
-                        .addComponent(DeleteBtn))
+                    .addComponent(DeleteBtn)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(dateBtn)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -274,12 +261,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
         RequestDate date = new RequestDate();
         date.setVisible(true);
     }//GEN-LAST:event_dateBtnActionPerformed
-
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:
-        editReport edit = new editReport();
-        edit.setVisible(true);
-    }//GEN-LAST:event_EditBtnActionPerformed
 
     private static void deleteLinesById(String filename, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -451,7 +432,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
     private javax.swing.JTable AssessmentTable;
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton DeleteBtn;
-    private javax.swing.JButton EditBtn;
     private javax.swing.JComboBox<String> TypeBox;
     private javax.swing.JButton dateBtn;
     private javax.swing.JLabel jLabel1;

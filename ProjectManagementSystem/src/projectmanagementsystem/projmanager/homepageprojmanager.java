@@ -5,6 +5,7 @@
 package projectmanagementsystem.projmanager;
 
 import projectmanagementsystem.Admin.LecturerData;
+import projectmanagementsystem.Login;
 
 /**
  *
@@ -67,19 +68,18 @@ public class homepageprojmanager extends javax.swing.JFrame {
                 .addComponent(homepageLabel)
                 .addGap(249, 249, 249))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backBtn2)
+                .addContainerGap(604, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(282, 282, 282)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(welcomeText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(viewReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(welcomeText)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(293, 293, 293)
-                        .addComponent(roleAssignments))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(backBtn2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(viewReports, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(roleAssignments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -89,9 +89,9 @@ public class homepageprojmanager extends javax.swing.JFrame {
                 .addComponent(homepageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(welcomeText)
-                .addGap(130, 130, 130)
+                .addGap(131, 131, 131)
                 .addComponent(roleAssignments)
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addComponent(viewReports)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(backBtn2)
@@ -110,6 +110,9 @@ public class homepageprojmanager extends javax.swing.JFrame {
 
     private void backBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtn2ActionPerformed
         // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        homepageprojmanager.this.setVisible(false);
     }//GEN-LAST:event_backBtn2ActionPerformed
 
     /**

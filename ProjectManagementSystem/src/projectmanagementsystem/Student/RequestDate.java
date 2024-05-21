@@ -22,7 +22,7 @@ public class RequestDate extends javax.swing.JFrame {
 
     String id = presentationData.assessmentID;
     String type = presentationData.assessmentType;
-
+    
     /**
      * Creates new form RequestDate
      */
