@@ -51,6 +51,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         superviseeListbtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        smBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         presTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -114,6 +115,13 @@ public class LecturerDashboard extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Lecturer Dashboard");
 
+        smBtn.setText("Second Marker List");
+        smBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,10 +134,12 @@ public class LecturerDashboard extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(superviseeListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(presentationRbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(evalRepbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(smBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(superviseeListbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(presentationRbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                        .addComponent(evalRepbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -140,12 +150,14 @@ public class LecturerDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(presentationRbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(presentationRbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addGap(30, 30, 30)
                 .addComponent(evalRepbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(superviseeListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(345, 345, 345))
+                .addGap(37, 37, 37)
+                .addComponent(smBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(248, 248, 248))
         );
 
         presTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -224,6 +236,11 @@ public class LecturerDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new SuperviseeList().setVisible(true);
     }//GEN-LAST:event_superviseeListbtnActionPerformed
+
+    private void smBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smBtnActionPerformed
+        // TODO add your handling code here:
+        new SecondMarker().setVisible(true);
+    }//GEN-LAST:event_smBtnActionPerformed
 
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) presTable.getModel();
@@ -377,6 +394,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable presTable;
     private javax.swing.JButton presentationRbtn;
+    private javax.swing.JButton smBtn;
     private javax.swing.JButton superviseeListbtn;
     // End of variables declaration//GEN-END:variables
 }

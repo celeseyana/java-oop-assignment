@@ -5,7 +5,9 @@
 package projectmanagementsystem.Lecturer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -35,6 +37,7 @@ public class ReportPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reportTable = new javax.swing.JTable();
@@ -43,10 +46,14 @@ public class ReportPage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         GradeBox = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        feedbackArea = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         submitBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
+        viewReport = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,9 +84,9 @@ public class ReportPage extends javax.swing.JFrame {
 
         GradeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        feedbackArea.setColumns(20);
+        feedbackArea.setRows(5);
+        jScrollPane2.setViewportView(feedbackArea);
 
         jLabel4.setText("Feedback:");
 
@@ -97,31 +104,52 @@ public class ReportPage extends javax.swing.JFrame {
             }
         });
 
+        viewReport.setText("View");
+        viewReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewReportActionPerformed(evt);
+            }
+        });
+
+        resetBtn.setText("Reset");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(backBtn)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(viewReport)
+                        .addGap(26, 26, 26)
+                        .addComponent(resetBtn))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(backBtn)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(submitBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(clearBtn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(GradeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(submitBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(clearBtn))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(GradeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane2))))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -131,7 +159,11 @@ public class ReportPage extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewReport)
+                    .addComponent(resetBtn))
+                .addGap(1, 1, 1)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -145,7 +177,7 @@ public class ReportPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(submitBtn)
                     .addComponent(clearBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(backBtn)
                 .addContainerGap())
         );
@@ -160,13 +192,98 @@ public class ReportPage extends javax.swing.JFrame {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Successfully submitted!");
-        String selectedValue = (String) GradeBox.getSelectedItem();
+        // Get the selected grade
+        String selectedGrade = (String) GradeBox.getSelectedItem();
+        String feedback = feedbackArea.getText();
+
+        if (feedback.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide feedback before submitting.");
+            return;
+        }        
+        
+        int selectedRow = reportTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a report to grade.");
+            return;
+        }
+
+        String[] rowData = new String[6];
+        for (int i = 0; i < 6; i++) {
+            rowData[i] = (String) reportTable.getValueAt(selectedRow, i);
+        }
+
+        writeFeedbackToFile(rowData, selectedGrade, feedback);
+        updateStatusInFile(rowData[1], selectedGrade); // Student ID
+
+        reportTable.setValueAt("Graded", selectedRow, 5);
+
+        JOptionPane.showMessageDialog(this, "Grade and feedback successfully submitted!");
     }//GEN-LAST:event_submitBtnActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         // TODO add your handling code here:
+        feedbackArea.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void viewReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewReportActionPerformed
+        // TODO add your handling code here:
+        // Get the selected row index
+        int selectedRow = reportTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a report to view.");
+            return;
+        }
+
+        // Get the student ID from the selected row
+        String studentID = (String) reportTable.getValueAt(selectedRow, 1);
+
+        // Read data from evaluation.txt
+        try (BufferedReader reader = new BufferedReader(new FileReader("evaluation.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\"");
+                if (parts.length >= 7) {
+                    String id = parts[1].replaceAll("\"", "").trim();
+                    if (id.equals(studentID)) {
+                        // Extract grade and feedback
+                        String grade = parts[5].replaceAll("\"", "").trim();
+                        String feedback = parts[6].replaceAll("\"", "").trim();
+
+                        // Display the data
+                        JOptionPane.showMessageDialog(this, "Grade: " + grade + "\nFeedback: " + feedback);
+                        return; // Exit loop after finding the matching ID
+                    }
+                }
+            }
+            // If the loop completes without finding a matching ID
+            JOptionPane.showMessageDialog(this, "This report has not been graded.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred while reading the evaluation data.");
+        }
+    }//GEN-LAST:event_viewReportActionPerformed
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = reportTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a report to reset.");
+            return;
+        }
+
+        String studentID = (String) reportTable.getValueAt(selectedRow, 1);
+
+        // Update the status in assessment.txt
+        updateStatusInFile(studentID, "Not Graded");
+
+        // Delete the entry from evaluation.txt
+        deleteEntryFromEvaluationFile(studentID);
+
+        // Update the table to reflect the changes
+        reportTable.setValueAt("Not Graded", selectedRow, 5);
+
+        JOptionPane.showMessageDialog(this, "Report status has been reset to 'Not Graded' and evaluation data has been deleted.");
+    }//GEN-LAST:event_resetBtnActionPerformed
 
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
@@ -205,8 +322,104 @@ public class ReportPage extends javax.swing.JFrame {
     }
 
     private void setGradeBoxValues() {
-        GradeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A", "B+", "B", "C+", "C", "C-", "D", "FAIL" }));
+        GradeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A", "B+", "B", "C+", "C", "C-", "D", "FAIL", "Not Graded" }));
     }    
+    
+    
+    private void writeFeedbackToFile(String[] rowData, String grade, String feedback) {
+        String studentID = rowData[1]; // Assuming the student ID is in the second column
+
+        // Check if an entry with the same student ID already exists
+        boolean entryExists = false;
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("evaluation.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\"");
+
+                if (parts.length >= 7) {
+                    String id = parts[1].replaceAll("\"", "").trim();
+                    if (id.equals(studentID)) {
+                        // Update the existing entry
+                        parts[5] = "" + grade + "";
+                        parts[6] = "" + feedback + "\"";
+                        entryExists = true;
+                    }
+                    fileContent.append(String.join("\", \"", parts)).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // If an entry with the same student ID doesn't exist, add a new one
+        if (!entryExists) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("evaluation.txt", true))) {
+                writer.write("\"" + rowData[0] + "\", \"" + rowData[1] + "\", \"" + rowData[2] + "\", \"" + rowData[3] + "\", \"" + rowData[4] + "\", \"" + grade + "\", \"" + feedback + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // If an entry with the same student ID exists, rewrite the entire file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("evaluation.txt"))) {
+                writer.write(fileContent.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateStatusInFile(String studentID, String status) {
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\"");
+                if (parts.length >= 7) {
+                    String id = parts[1].replaceAll("\"", "").trim();
+                    if (id.equals(studentID)) {
+                        parts[6] = "\"" + status + "\"";
+                    }
+                    fileContent.append(String.join("\", \"", parts)).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("assessment.txt"))) {
+            writer.write(fileContent.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteEntryFromEvaluationFile(String studentID) {
+        StringBuilder fileContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("evaluation.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\"");
+                if (parts.length >= 7) {
+                    String id = parts[1].replaceAll("\"", "").trim();
+                    if (!id.equals(studentID)) {
+                        fileContent.append(line).append("\n");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("evaluation.txt"))) {
+            writer.write(fileContent.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -234,6 +447,36 @@ public class ReportPage extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -247,14 +490,17 @@ public class ReportPage extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> GradeBox;
     private javax.swing.JButton backBtn;
     private javax.swing.JButton clearBtn;
+    private javax.swing.JTextArea feedbackArea;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable reportTable;
+    private javax.swing.JButton resetBtn;
     private javax.swing.JButton submitBtn;
+    private javax.swing.JButton viewReport;
     // End of variables declaration//GEN-END:variables
 }
