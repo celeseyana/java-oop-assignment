@@ -4,17 +4,36 @@
  */
 package projectmanagementsystem.projmanager;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
  */
 public class reportView extends javax.swing.JFrame {
-
+    
+    private ArrayList<String> globalrptname;
+    private ArrayList<String> globalassessmenttype;
+    private ArrayList<String> globaldatetime;
+    private ArrayList<String> globallink;
+    private ArrayList<String> globalstatus;
+    private ArrayList<String> globalgrade;
     /**
      * Creates new form assignStudent
      */
     public reportView() {
         initComponents();
+        globalrptname = new ArrayList<>();
+        globalassessmenttype = new ArrayList<>();
+        globaldatetime = new ArrayList<>();
+        globallink = new ArrayList<>();
+        globalstatus = new ArrayList<>();
+        globalgrade = new ArrayList<>();
+        reportTable();
     }
 
     /**
@@ -27,133 +46,85 @@ public class reportView extends javax.swing.JFrame {
     private void initComponents() {
 
         label1 = new java.awt.Label();
-        studentRptName = new java.awt.Label();
-        label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
-        label4 = new java.awt.Label();
-        label5 = new java.awt.Label();
-        label6 = new java.awt.Label();
-        label7 = new java.awt.Label();
-        studentName = new javax.swing.JLabel();
-        assessmentType = new javax.swing.JLabel();
-        dateofSubmission = new javax.swing.JLabel();
-        timeofSubmission = new javax.swing.JLabel();
-        submissionLink = new javax.swing.JLabel();
-        submissionStatus = new javax.swing.JLabel();
-        studentGrade = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reportTable = new javax.swing.JTable();
+        viewrptBack = new javax.swing.JButton();
+        viewrptExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         label1.setText("Student Report");
 
-        studentRptName.setText("Student Name:");
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        label2.setText("Assessment Type:");
+            },
+            new String [] {
+                "Name", "Assessment", "Date of Submission", "Time of Submission", "Submission Link", "Submission Status", "Submission Grade"
+            }
+        ));
+        jScrollPane1.setViewportView(reportTable);
 
-        label3.setText("Date of Submission:");
+        viewrptBack.setText("Back");
+        viewrptBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewrptBackActionPerformed(evt);
+            }
+        });
 
-        label4.setText("Time of Submission:");
-
-        label5.setText("Submission Link:");
-
-        label6.setText("Submission Status:");
-
-        label7.setText("Grade:");
-
-        studentName.setText("null");
-
-        assessmentType.setText("null");
-
-        dateofSubmission.setText("null");
-
-        timeofSubmission.setText("null");
-
-        submissionLink.setText("null");
-
-        submissionStatus.setText("null");
-
-        studentGrade.setText("null");
+        viewrptExit.setText("Quit");
+        viewrptExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewrptExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(450, 450, 450)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(192, 192, 192))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(studentRptName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(studentName)
-                    .addComponent(assessmentType)
-                    .addComponent(dateofSubmission)
-                    .addComponent(timeofSubmission)
-                    .addComponent(submissionLink)
-                    .addComponent(submissionStatus)
-                    .addComponent(studentGrade))
-                .addContainerGap(181, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(viewrptBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(viewrptExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 961, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addComponent(studentRptName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(studentName))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(assessmentType))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(dateofSubmission, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(timeofSubmission, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(submissionLink)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(submissionStatus)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(studentGrade))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewrptExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewrptBack, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
         label1.getAccessibleContext().setAccessibleName("studentReport");
-        studentRptName.getAccessibleContext().setAccessibleName("studentName");
-        label2.getAccessibleContext().setAccessibleName("Assessment Type");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void viewrptBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewrptBackActionPerformed
+        homepageprojmanager homepageFrame = new homepageprojmanager();
+        homepageFrame.setVisible(true);
+        reportView.this.setVisible(false);
+    }//GEN-LAST:event_viewrptBackActionPerformed
+
+    private void viewrptExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewrptExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_viewrptExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,24 +159,72 @@ public class reportView extends javax.swing.JFrame {
             public void run() {
                 new reportView().setVisible(true);
             }
-        });
+        });    
     }
 
+    
+        public void reportTable() {
+        globalrptname = new ArrayList<>();
+        globalassessmenttype = new ArrayList<>();
+        globaldatetime = new ArrayList<>();
+        globallink = new ArrayList<>();
+        globalstatus = new ArrayList<>();
+        globalgrade = new ArrayList<>();
+
+        DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+
+                // Check if the line contains data for the desired user
+                if (parts.length >= 7) {
+                    // Extract data for ID, Type, Date, and Link from the parts array
+                    String name = parts[0];
+                    String assessmenttype = parts[2];
+                    String datetime = parts[3];
+                    String link = parts[4];
+                    String status = parts[5];
+                    String grade = parts[6];
+
+                    globalrptname.add(parts[0]);
+                    globalassessmenttype.add(parts[2]);
+                    globaldatetime.add(parts[3]);
+                    globallink.add(parts[4]);
+                    globalstatus.add(parts[5]);
+                    globalgrade.add(parts[6]);
+                    
+                    String[] datetime1 = datetime.split("T");
+                    String date = datetime1[0];
+                    String time = datetime1[1];
+
+                    // Remove double quotes from extracted values
+                    name = name.replaceAll("\"", "").trim();
+                    assessmenttype = assessmenttype.replaceAll("\"", "").trim();
+                    date = date.replaceAll("\"", "").trim();
+                    time = time.replaceAll("\"", "").trim();
+                    link = link.replaceAll("\"", "").trim();
+                    status = status.replaceAll("\"", "").trim();
+                    grade = grade.replaceAll("\"", "").trim();
+
+
+                    // Create an array with the data and add it as a new row to the table
+                    Object[] rowData = {name, assessmenttype, date, time, link, status, grade};
+                    model.addRow(rowData);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+        
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel assessmentType;
-    private javax.swing.JLabel dateofSubmission;
+    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
-    private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
-    private javax.swing.JLabel studentGrade;
-    private javax.swing.JLabel studentName;
-    private java.awt.Label studentRptName;
-    private javax.swing.JLabel submissionLink;
-    private javax.swing.JLabel submissionStatus;
-    private javax.swing.JLabel timeofSubmission;
+    private javax.swing.JTable reportTable;
+    private javax.swing.JButton viewrptBack;
+    private javax.swing.JButton viewrptExit;
     // End of variables declaration//GEN-END:variables
 }

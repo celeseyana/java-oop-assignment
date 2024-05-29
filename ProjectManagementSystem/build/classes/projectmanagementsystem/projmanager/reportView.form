@@ -23,33 +23,22 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="label1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="label4" min="-2" max="-2" attributes="0"/>
-                  <Component id="label3" min="-2" max="-2" attributes="0"/>
-                  <Component id="label5" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="label6" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="label7" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="label2" min="-2" max="-2" attributes="0"/>
-                  <Component id="studentRptName" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="450" max="-2" attributes="0"/>
+              <Component id="label1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="20" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="studentName" min="-2" max="-2" attributes="0"/>
-                  <Component id="assessmentType" min="-2" max="-2" attributes="0"/>
-                  <Component id="dateofSubmission" min="-2" max="-2" attributes="0"/>
-                  <Component id="timeofSubmission" min="-2" max="-2" attributes="0"/>
-                  <Component id="submissionLink" min="-2" max="-2" attributes="0"/>
-                  <Component id="submissionStatus" min="-2" max="-2" attributes="0"/>
-                  <Component id="studentGrade" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="viewrptBack" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="viewrptExit" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane1" min="-2" pref="961" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="181" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -58,56 +47,12 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="label1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Group type="103" groupAlignment="1" attributes="0">
-                                                          <Component id="studentRptName" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="studentName" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="label2" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="assessmentType" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="label3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="dateofSubmission" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="label4" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="timeofSubmission" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="label5" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace pref="124" max="-2" attributes="0"/>
-                              <Component id="submissionLink" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="label6" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
-                      <Component id="submissionStatus" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="label7" min="-2" max="-2" attributes="0"/>
-                  <Component id="studentGrade" min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="608" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="viewrptExit" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="viewrptBack" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
@@ -123,81 +68,87 @@
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="studentReport"/>
       </AccessibilityProperties>
     </Component>
-    <Component class="java.awt.Label" name="studentRptName">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="reportTable">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="7" rowCount="0">
+                <Column editable="true" title="Name" type="java.lang.Object"/>
+                <Column editable="true" title="Assessment" type="java.lang.Object"/>
+                <Column editable="true" title="Date of Submission" type="java.lang.Object"/>
+                <Column editable="true" title="Time of Submission" type="java.lang.Object"/>
+                <Column editable="true" title="Submission Link" type="java.lang.Object"/>
+                <Column editable="true" title="Submission Status" type="java.lang.Object"/>
+                <Column editable="true" title="Submission Grade" type="java.lang.Object"/>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="viewrptBack">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Student Name:"/>
+        <Property name="text" type="java.lang.String" value="Back"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="studentName"/>
-      </AccessibilityProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewrptBackActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="java.awt.Label" name="label2">
+    <Component class="javax.swing.JButton" name="viewrptExit">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Assessment Type:"/>
+        <Property name="text" type="java.lang.String" value="Quit"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Assessment Type"/>
-      </AccessibilityProperties>
-    </Component>
-    <Component class="java.awt.Label" name="label3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Date of Submission:"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="label4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Time of Submission:"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="label5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Submission Link:"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="label6">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Submission Status:"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="label7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Grade:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="studentName">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="assessmentType">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="dateofSubmission">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="timeofSubmission">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="submissionLink">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="submissionStatus">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="studentGrade">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="null"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewrptExitActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
