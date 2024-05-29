@@ -1,2 +1,2 @@
-"Lai Weng Lok", "57441", "FYP", "2024-05-09T12:08:51", "https://moodle.AGH.edu.my/34887599", "A+", "test"
+"Lai Weng Lok", "57441", "FYP", "2024-05-09T12:08:51", "https://moodle.AGH.edu.my/34887599", "A+", "very clear and concise"
 "Ong Zi Yang", "86427", "FYP", "2024-05-21T21:21:18", "https://moodle.AGH.edu.my/f5f316ae", "B+", "Report is clear and concised, citation needs more work.
