@@ -51,6 +51,11 @@ public class homepageprojmanager extends javax.swing.JFrame {
         });
 
         viewReports.setText("View Reports ");
+        viewReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewReportsActionPerformed(evt);
+            }
+        });
 
         backBtn2.setText("Back");
         backBtn2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +119,12 @@ public class homepageprojmanager extends javax.swing.JFrame {
         login.setVisible(true);
         homepageprojmanager.this.setVisible(false);
     }//GEN-LAST:event_backBtn2ActionPerformed
+
+    private void viewReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewReportsActionPerformed
+        reportView viewRptIntentFrame = new reportView();
+        viewRptIntentFrame.setVisible(true);
+        homepageprojmanager.this.setVisible(false);
+    }//GEN-LAST:event_viewReportsActionPerformed
 
     /**
      * @param args the command line arguments
