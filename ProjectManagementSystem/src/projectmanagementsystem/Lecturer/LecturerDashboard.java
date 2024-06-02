@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import projectmanagementsystem.Admin.LecturerData;
+import projectmanagementsystem.Login;
 
 /**
  *
@@ -52,6 +53,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         smBtn = new javax.swing.JButton();
+        LogoutBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         presTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -122,21 +124,29 @@ public class LecturerDashboard extends javax.swing.JFrame {
             }
         });
 
+        LogoutBtn.setText("Logout");
+        LogoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 24, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(smBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LogoutBtn)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(smBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                         .addComponent(superviseeListbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(presentationRbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                         .addComponent(evalRepbtn, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
@@ -157,7 +167,9 @@ public class LecturerDashboard extends javax.swing.JFrame {
                 .addComponent(superviseeListbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(smBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(248, 248, 248))
+                .addGap(192, 192, 192)
+                .addComponent(LogoutBtn)
+                .addGap(33, 33, 33))
         );
 
         presTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -241,6 +253,13 @@ public class LecturerDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new SecondMarker().setVisible(true);
     }//GEN-LAST:event_smBtnActionPerformed
+
+    private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        LecturerDashboard.this.setVisible(false);
+    }//GEN-LAST:event_LogoutBtnActionPerformed
 
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) presTable.getModel();
@@ -376,6 +395,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LogoutBtn;
     private javax.swing.JTable assignedSup;
     private javax.swing.JButton evalRepbtn;
     private javax.swing.JButton jButton2;

@@ -4,6 +4,11 @@
  */
 package projectmanagementsystem.Lecturer;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  * @author User
@@ -15,6 +20,7 @@ public class SuperviseeList extends javax.swing.JFrame {
      */
     public SuperviseeList() {
         initComponents();
+        populateListFromFile("lecturer.txt");
     }
 
     /**
@@ -34,11 +40,6 @@ public class SuperviseeList extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supervisee List");
 
-        ListofSupervisees.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(ListofSupervisees);
 
         backbtn1.setText("Back");
@@ -58,11 +59,11 @@ public class SuperviseeList extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(backbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(superviseetext, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(98, 98, 98))))
@@ -86,6 +87,43 @@ public class SuperviseeList extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_backbtn1ActionPerformed
+
+    private void populateListFromFile(String filename) {
+        ArrayList<String> usernames = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5) {
+                    String value = parts[3].replaceAll("\"", "").trim(); // Remove double quotes and trim whitespace                   
+                    if ("True".equals(value)) {
+                        usernames.add(parts[0].trim().replaceAll("^\"|\"$", ""));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+        // Convert ArrayLists to arrays for JList
+        String[] usernamesArray = usernames.toArray(new String[0]);
+
+        // Set the array as the data model for the JList
+        ListofSupervisees.setModel(
+                new javax.swing.AbstractListModel<String>() {
+            String[] strings = usernamesArray;
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public String getElementAt(int i) {
+                return strings[i];
+            }
+        }
+        );
+    }
 
     /**
      * @param args the command line arguments

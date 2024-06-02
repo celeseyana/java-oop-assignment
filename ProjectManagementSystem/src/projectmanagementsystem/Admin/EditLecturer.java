@@ -32,7 +32,6 @@ public class EditLecturer extends javax.swing.JFrame {
         passwords = new ArrayList<>();
         projectManager = new ArrayList<>();
         populateListFromFile("lecturer.txt");
-//        removeDuplicates("lecturer.txt");
     }
 
     /**
