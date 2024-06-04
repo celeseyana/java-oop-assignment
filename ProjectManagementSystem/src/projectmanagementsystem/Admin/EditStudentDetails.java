@@ -10,8 +10,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +21,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
     String passwordToEdit = StudentData.passwordToEdit;
     String intakeToEdit = StudentData.intakeToEdit;
     String assessmentType = StudentData.typeToEdit;
+    String lecturerType = StudentData.lecturerToEdit;
 
     /**
      * Creates new form EditStudentDetails
@@ -185,7 +184,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
         String selectedValue = (String) IntakeCodeBox.getSelectedItem();
-        saveData(StudentNameTF.getText(), passwordTF.getText(), selectedValue, assessmentType);
+        saveData(StudentNameTF.getText(), passwordTF.getText(), selectedValue, assessmentType, lecturerType);
         EditStudentDetails.this.setVisible(false);
         Admin edt = new Admin();
         edt.setVisible(true);
@@ -197,7 +196,7 @@ public class EditStudentDetails extends javax.swing.JFrame {
         IntakeCodeBox.setSelectedItem(intakeToEdit);
     }
 
-    public static void saveData(String usr, String pw, String intakeCode, String Type) {
+    public static void saveData(String usr, String pw, String intakeCode, String Type, String lecturer) {
         StringBuilder fileContent = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
@@ -207,10 +206,11 @@ public class EditStudentDetails extends javax.swing.JFrame {
                 String trimmedLine = line.trim();
                 if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
                     String[] parts = trimmedLine.split("\",\\s*\"");
-                    if (parts.length >= 4 && parts[0].equals("\"" + usr)) {
+                    if (parts.length >= 5 && parts[0].equals("\"" + usr)) {
                         fileContent.append("\"").append(usr).append("\", \"").append(pw).append("\", \"")
                                 .append(intakeCode).append("\", \"")
-                                .append(Type).append("\"\n");
+                                .append(Type).append("\", \"")
+                                .append(lecturer).append("\"\n");
                     } else {
                         fileContent.append(line).append("\n");
                     }

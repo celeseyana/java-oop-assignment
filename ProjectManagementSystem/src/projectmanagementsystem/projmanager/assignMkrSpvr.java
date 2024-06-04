@@ -77,17 +77,10 @@ public class assignMkrSpvr extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "ID", "Project Manager", "Supervisor", "Second Marker"
+                "Name", "Password", "Project Manager", "Supervisor", "Second Marker"
             }
         ));
         jScrollPane1.setViewportView(availabilityTable);
-        if (availabilityTable.getColumnModel().getColumnCount() > 0) {
-            availabilityTable.getColumnModel().getColumn(0).setHeaderValue("Name");
-            availabilityTable.getColumnModel().getColumn(1).setHeaderValue("ID");
-            availabilityTable.getColumnModel().getColumn(2).setHeaderValue("Project Manager");
-            availabilityTable.getColumnModel().getColumn(3).setHeaderValue("Supervisor");
-            availabilityTable.getColumnModel().getColumn(4).setHeaderValue("Second Marker");
-        }
 
         backBtn1.setText("Back");
         backBtn1.addActionListener(new java.awt.event.ActionListener() {
@@ -108,9 +101,9 @@ public class assignMkrSpvr extends javax.swing.JFrame {
                 .addGap(34, 221, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addGroup(buttonBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(assignMarkerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(assignSpvrBtn))
+                .addGroup(buttonBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(assignMarkerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(assignSpvrBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34))
         );
         buttonBox1Layout.setVerticalGroup(

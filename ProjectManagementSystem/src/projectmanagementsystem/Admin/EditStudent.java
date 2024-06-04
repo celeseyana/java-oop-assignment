@@ -22,6 +22,7 @@ public class EditStudent extends javax.swing.JFrame {
     private ArrayList<String> passwords;
     private ArrayList<String> intakeCodes;
     private ArrayList<String> assessmentType;
+    private ArrayList<String> lecturerType;
 
     /**
      * Creates new form Edit
@@ -31,6 +32,7 @@ public class EditStudent extends javax.swing.JFrame {
         passwords = new ArrayList<>();
         intakeCodes = new ArrayList<>();
         assessmentType = new ArrayList<>();
+        lecturerType = new ArrayList<>();
         populateListFromFile("Student.txt");
     }
 
@@ -216,6 +218,7 @@ public class EditStudent extends javax.swing.JFrame {
             StudentData.passwordToEdit = passwords.get(selectedIndex);
             StudentData.intakeToEdit = intakeCodes.get(selectedIndex);
             StudentData.typeToEdit = assessmentType.get(selectedIndex);
+            StudentData.lecturerToEdit = lecturerType.get(selectedIndex);
             EditStudentDetails editstudentdetails = new EditStudentDetails();
             editstudentdetails.setVisible(true);
         } else {
@@ -261,7 +264,6 @@ public class EditStudent extends javax.swing.JFrame {
                 if (!line.startsWith("\"" + username + "\",")) {
                     buffer.append(line).append(System.lineSeparator());
                 } else {
-                    // Skip the next four lines after finding the matching username
                     for (int i = 0; i < 4; i++) {
                         reader.readLine();
                     }
@@ -284,6 +286,7 @@ public class EditStudent extends javax.swing.JFrame {
         passwords = new ArrayList<>(); // Initialize passwords ArrayList
         intakeCodes = new ArrayList<>();
         assessmentType = new ArrayList<>();
+        lecturerType = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -294,6 +297,8 @@ public class EditStudent extends javax.swing.JFrame {
                     passwords.add(parts[1].trim().replaceAll("^\"|\"$", ""));
                     intakeCodes.add(parts[2].trim().replaceAll("^\"|\"$", ""));
                     assessmentType.add(parts[3].trim().replaceAll("^\"|\"$", ""));
+                    lecturerType.add(parts[4].trim().replaceAll("^\"|\"$", ""));
+
                 }
             }
         } catch (IOException e) {

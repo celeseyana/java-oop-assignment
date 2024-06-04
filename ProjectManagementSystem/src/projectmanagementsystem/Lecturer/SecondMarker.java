@@ -8,12 +8,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
+import projectmanagementsystem.Admin.LecturerData;
 
 /**
  *
  * @author User
  */
 public class SecondMarker extends javax.swing.JFrame {
+
+    String lecturername = LecturerData.usernameToDelete;
 
     /**
      * Creates new form SecondMarker
@@ -99,8 +102,8 @@ public class SecondMarker extends javax.swing.JFrame {
                 String[] parts = line.split("\",\\s*\"");
                 if (parts.length >= 5) {
                     String name = parts[0].replaceAll("\"", "").trim();
-                    String isSecondMarker = parts[4].replaceAll("\"", "").trim();
-                    if ("True".equalsIgnoreCase(isSecondMarker)) {
+                    String assignedlecturer = parts[4].replaceAll("\"", "").trim();
+                    if ("True".equalsIgnoreCase(assignedlecturer)) {
                         listModel.addElement(name);
                     }
                 }
@@ -109,8 +112,8 @@ public class SecondMarker extends javax.swing.JFrame {
             e.printStackTrace();
         }
         SMList.setModel(listModel);
-    }  
-    
+    }
+
     /**
      * @param args the command line arguments
      */

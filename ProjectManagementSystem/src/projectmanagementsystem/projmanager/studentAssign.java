@@ -10,11 +10,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static projectmanagementsystem.projmanager.assignMkrSpvr.checkStatus;
-import static projectmanagementsystem.projmanager.assignMkrSpvr.textSave;
+import projectmanagementsystem.Admin.StudentData;
 
 /**
  *
@@ -26,6 +24,7 @@ public class studentAssign extends javax.swing.JFrame {
     private ArrayList<String> globalpassword;
     private ArrayList<String> globalintake;
     private ArrayList<String> globalassessment;
+    private ArrayList<String> globalLecturer;
 
     /**
      * Creates new form reportviewFrame
@@ -36,6 +35,7 @@ public class studentAssign extends javax.swing.JFrame {
         globalpassword = new ArrayList<>();
         globalintake = new ArrayList<>();
         globalassessment = new ArrayList<>();
+        globalLecturer = new ArrayList<>();
         assignStudentTable();
     }
 
@@ -52,6 +52,7 @@ public class studentAssign extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         assignStudentBtn = new javax.swing.JButton();
+        assignLecturerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,7 +68,7 @@ public class studentAssign extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Intake Code", "Assessment"
+                "Name", "Intake Code", "Assessment", "Assigned Lecturer"
             }
         ));
         jScrollPane1.setViewportView(studentTable);
@@ -76,6 +77,13 @@ public class studentAssign extends javax.swing.JFrame {
         assignStudentBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignStudentBtnActionPerformed(evt);
+            }
+        });
+
+        assignLecturerBtn.setText("Assign to Lecturer");
+        assignLecturerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignLecturerBtnActionPerformed(evt);
             }
         });
 
@@ -91,7 +99,9 @@ public class studentAssign extends javax.swing.JFrame {
                 .addContainerGap(125, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
-                .addComponent(assignStudentBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(assignStudentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(assignLecturerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
@@ -103,7 +113,9 @@ public class studentAssign extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(217, 217, 217)
-                        .addComponent(assignStudentBtn)))
+                        .addComponent(assignStudentBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(assignLecturerBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(backBtn4)
                 .addContainerGap())
@@ -119,6 +131,7 @@ public class studentAssign extends javax.swing.JFrame {
         String name = (String) model.getValueAt(selectedIndex, 0);
         String intake = (String) model.getValueAt(selectedIndex, 1);
         String password = globalpassword.get(selectedIndex);
+        String lecturer = globalLecturer.get(selectedIndex);
 
         String[] assessmentType = {"Internship", "Investigation Report", "CP1", "CP2", "RMCP", "FYP"};
 
@@ -128,7 +141,7 @@ public class studentAssign extends javax.swing.JFrame {
             String assessment = choiceString;
             int meow = JOptionPane.showConfirmDialog(this, "Are you sure you want to assign this option type?");
             if (meow == JOptionPane.YES_OPTION) {
-                textSave(name, password, intake, assessment);
+                textSave(name, password, intake, assessment, lecturer);
                 JOptionPane.showMessageDialog(this, "Assigned Successfully");
             }
 
@@ -143,6 +156,18 @@ public class studentAssign extends javax.swing.JFrame {
         studentAssign.this.setVisible(false);
     }//GEN-LAST:event_backBtn4ActionPerformed
 
+    private void assignLecturerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignLecturerBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = studentTable.getSelectedRow();
+        StudentData.usernameToDelete = globalname.get(selectedIndex);
+        StudentData.passwordToEdit = globalpassword.get(selectedIndex);
+        StudentData.intakeToEdit = globalintake.get(selectedIndex);
+        StudentData.typeToEdit = globalassessment.get(selectedIndex);
+        StudentData.lecturerToEdit = globalLecturer.get(selectedIndex);
+        assignLecturer assignlecturer = new assignLecturer();
+        assignlecturer.setVisible(true);
+    }//GEN-LAST:event_assignLecturerBtnActionPerformed
+
     static boolean checkStatus(String status) {
         if (status.equalsIgnoreCase("null")) {
             return true;
@@ -151,7 +176,7 @@ public class studentAssign extends javax.swing.JFrame {
         }
     }
 
-    public static void textSave(String name, String password, String intake, String assessment) {
+    public static void textSave(String name, String password, String intake, String assessment, String lecturer) {
         StringBuilder fileContent = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
@@ -161,10 +186,11 @@ public class studentAssign extends javax.swing.JFrame {
                 String trimmedLine = line.trim();
                 if (trimmedLine.startsWith("\"") && trimmedLine.endsWith("\"")) {
                     String[] parts = trimmedLine.split("\",\\s*\"");
-                    if (parts.length >= 4 && parts[0].equals("\"" + name)) {
+                    if (parts.length >= 5 && parts[0].replaceAll("\"", "").equals(name)) {
                         fileContent.append("\"").append(name).append("\", \"").append(password).append("\", \"")
                                 .append(intake).append("\", \"")
-                                .append(assessment).append("\"\n");
+                                .append(assessment).append("\", \"")
+                                .append(lecturer).append("\"\n");
                     } else {
                         fileContent.append(line).append("\n");
                     }
@@ -190,6 +216,7 @@ public class studentAssign extends javax.swing.JFrame {
         globalpassword = new ArrayList<>();
         globalintake = new ArrayList<>();
         globalassessment = new ArrayList<>();
+        globalLecturer = new ArrayList<>();
 
         DefaultTableModel model = (DefaultTableModel) studentTable.getModel();
 
@@ -199,26 +226,29 @@ public class studentAssign extends javax.swing.JFrame {
                 String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
 
                 // Check if the line contains data for the desired user
-                if (parts.length >= 4) {
+                if (parts.length >= 5) {
                     // Extract data for ID, Type, Date, and Link from the parts array
                     String name = parts[0];
                     String password = parts[1];
                     String intake = parts[2];
                     String assessment = parts[3];
+                    String lecturer = parts[4];
 
                     globalname.add(parts[0]);
                     globalpassword.add(parts[1]);
                     globalintake.add(parts[2]);
                     globalassessment.add(parts[3]);
+                    globalLecturer.add(parts[4]);
 
                     // Remove double quotes from extracted values
                     name = name.replaceAll("\"", "").trim();
                     password = password.replaceAll("\"", "").trim();
                     intake = intake.replaceAll("\"", "").trim();
                     assessment = assessment.replaceAll("\"", "").trim();
+                    lecturer = lecturer.replaceAll("\"", "").trim();
 
                     // Create an array with the data and add it as a new row to the table
-                    Object[] rowData = {name, intake, assessment};
+                    Object[] rowData = {name, intake, assessment, lecturer};
                     model.addRow(rowData);
                 }
             }
@@ -264,6 +294,7 @@ public class studentAssign extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton assignLecturerBtn;
     private javax.swing.JButton assignStudentBtn;
     private javax.swing.JButton backBtn4;
     private javax.swing.JScrollPane jScrollPane1;

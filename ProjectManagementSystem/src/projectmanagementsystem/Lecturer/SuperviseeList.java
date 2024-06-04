@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import projectmanagementsystem.Admin.LecturerData;
 
 /**
  *
@@ -15,12 +17,14 @@ import java.util.ArrayList;
  */
 public class SuperviseeList extends javax.swing.JFrame {
 
+    String lecturername = LecturerData.usernameToDelete;
+
     /**
      * Creates new form SuperviseeList
      */
     public SuperviseeList() {
         initComponents();
-        populateListFromFile("lecturer.txt");
+        populateList();
     }
 
     /**
@@ -88,41 +92,24 @@ public class SuperviseeList extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backbtn1ActionPerformed
 
-    private void populateListFromFile(String filename) {
-        ArrayList<String> usernames = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    private void populateList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("student.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split("\",\\s*\"");
                 if (parts.length >= 5) {
-                    String value = parts[3].replaceAll("\"", "").trim(); // Remove double quotes and trim whitespace                   
-                    if ("True".equals(value)) {
-                        usernames.add(parts[0].trim().replaceAll("^\"|\"$", ""));
+                    String name = parts[0].replaceAll("\"", "").trim();
+                    String assignedlecturer = parts[4].replaceAll("\"", "").trim();
+                    if (lecturername.equalsIgnoreCase(assignedlecturer)) {
+                        listModel.addElement(name);
                     }
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        // Convert ArrayLists to arrays for JList
-        String[] usernamesArray = usernames.toArray(new String[0]);
-
-        // Set the array as the data model for the JList
-        ListofSupervisees.setModel(
-                new javax.swing.AbstractListModel<String>() {
-            String[] strings = usernamesArray;
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
-            }
-        }
-        );
+        ListofSupervisees.setModel(listModel);
     }
 
     /**

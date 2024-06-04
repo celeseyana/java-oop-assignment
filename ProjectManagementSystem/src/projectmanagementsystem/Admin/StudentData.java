@@ -13,4 +13,5 @@ public class StudentData {
         public static String passwordToEdit;
         public static String intakeToEdit;
         public static String typeToEdit;
+        public static String lecturerToEdit;
 }
