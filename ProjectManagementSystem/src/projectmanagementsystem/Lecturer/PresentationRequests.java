@@ -150,61 +150,61 @@ public class PresentationRequests extends javax.swing.JFrame {
 
         // Check if a row is selected
         if (selectedRow != -1) {
-          // Get selected student name for confirmation
-          String selectedStudent = (String) requestTable.getValueAt(selectedRow, 0);
+            // Get selected student name for confirmation
+            String selectedStudent = (String) requestTable.getValueAt(selectedRow, 0);
 
-          // Confirmation prompt
-          int confirmation = JOptionPane.showConfirmDialog(this,
-              "Are you sure you want to reject the presentation request from " + selectedStudent + "?",
-              "Reject Confirmation", JOptionPane.YES_NO_OPTION);
+            // Confirmation prompt
+            int confirmation = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to reject the presentation request from " + selectedStudent + "?",
+                    "Reject Confirmation", JOptionPane.YES_NO_OPTION);
 
-          if (confirmation == JOptionPane.YES_OPTION) {
-            // Maintain a list of lines from the file
-            List<String> presentationLines;
+            if (confirmation == JOptionPane.YES_OPTION) {
+                // Maintain a list of lines from the file
+                List<String> presentationLines;
 
-            // Read the entire presentation.txt file into the list
-            try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
-              presentationLines = reader.lines().collect(Collectors.toList());
-            } catch (IOException e) {
-              e.printStackTrace();
-              JOptionPane.showMessageDialog(this, "Error reading presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
-              return;
+                // Read the entire presentation.txt file into the list
+                try (BufferedReader reader = new BufferedReader(new FileReader("presentation.txt"))) {
+                    presentationLines = reader.lines().collect(Collectors.toList());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error reading presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Find the line to remove based on student ID
+                int lineToRemove = -1;
+                for (int i = 0; i < presentationLines.size(); i++) {
+                    String[] parts = presentationLines.get(i).split("\",\\s*\"");
+                    if (parts.length >= 2 && parts[1].equals(requestTable.getValueAt(selectedRow, 1))) {
+                        lineToRemove = i;
+                        break;
+                    }
+                }
+
+                // Remove the line from the list if found
+                if (lineToRemove != -1) {
+                    presentationLines.remove(lineToRemove);
+                }
+
+                // Rewrite the presentation.txt file with the updated list
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("presentation.txt"))) {
+                    for (String line : presentationLines) {
+                        writer.write(line + System.lineSeparator());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error writing presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Update table 
+                DefaultTableModel model = (DefaultTableModel) requestTable.getModel();
+                model.removeRow(selectedRow);
+
+                JOptionPane.showMessageDialog(this, "Presentation request rejected successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
-
-            // Find the line to remove based on student ID
-            int lineToRemove = -1;
-            for (int i = 0; i < presentationLines.size(); i++) {
-              String[] parts = presentationLines.get(i).split("\",\\s*\"");
-              if (parts.length >= 2 && parts[1].equals(requestTable.getValueAt(selectedRow, 1))) {
-                lineToRemove = i;
-                break;
-              }
-            }
-
-            // Remove the line from the list if found
-            if (lineToRemove != -1) {
-              presentationLines.remove(lineToRemove);
-            }
-
-            // Rewrite the presentation.txt file with the updated list
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("presentation.txt"))) {
-              for (String line : presentationLines) {
-                writer.write(line + System.lineSeparator());
-              }
-            } catch (IOException e) {
-              e.printStackTrace();
-              JOptionPane.showMessageDialog(this, "Error writing presentation file!", "Error", JOptionPane.ERROR_MESSAGE);
-              return;
-            }
-
-            // Update table 
-            DefaultTableModel model = (DefaultTableModel) requestTable.getModel();
-            model.removeRow(selectedRow);
-
-            JOptionPane.showMessageDialog(this, "Presentation request rejected successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-          }
         } else {
-          JOptionPane.showMessageDialog(this, "Please select a presentation request to reject!", "Selection Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a presentation request to reject!", "Selection Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_rejectBtnActionPerformed
 
@@ -239,7 +239,7 @@ public class PresentationRequests extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void updatePresentationStatus(String assessmentId, String newStatus) {
         File inputFile = new File("presentation.txt");
         ArrayList<String> fileContent = new ArrayList<>();
@@ -253,7 +253,7 @@ public class PresentationRequests extends javax.swing.JFrame {
                 fileContent.add(line);
             }
         } catch (IOException e) {
-            Logger.getLogger(PresentationRequests.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(inputFile))) {
@@ -262,7 +262,7 @@ public class PresentationRequests extends javax.swing.JFrame {
                 writer.newLine();
             }
         } catch (IOException e) {
-            Logger.getLogger(PresentationRequests.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
         }
     }
 
