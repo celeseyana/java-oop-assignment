@@ -279,14 +279,26 @@ public final class ReportSubmission extends javax.swing.JFrame {
             if (row != -1) {
                 // Get the data from the selected row
                 String ID = (String) target.getValueAt(row, 0);
+                try (BufferedReader reader = new BufferedReader(new FileReader("assessment.txt"))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split("\",\\s*\""); // Split the line by "\", " with optional spaces
+                        String txtID = parts[1].trim();
+                        String SubmissionStatus = parts[5].trim();
+                        String Grade = parts[6].trim().replaceAll("\"", "");
+                        if (ID.equalsIgnoreCase(txtID)) {
+                            SubmissionText.setText(SubmissionStatus);
+                            GradeText.setText(Grade);
 
-                // Set the data to the label
-                SubmissionText.setText(ID);
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }//GEN-LAST:event_AssessmentTableMouseClicked
-
-    
 
     private static void deleteLinesById(String filename, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
