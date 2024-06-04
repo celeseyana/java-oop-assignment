@@ -4,6 +4,8 @@
  */
 package projectmanagementsystem.Student;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -22,6 +24,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -59,8 +62,8 @@ public final class ReportSubmission extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         AddBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        SubmissionText = new javax.swing.JLabel();
+        GradeText = new javax.swing.JLabel();
         TypeBox = new javax.swing.JComboBox<>();
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -86,9 +89,9 @@ public final class ReportSubmission extends javax.swing.JFrame {
 
         jLabel5.setText("Assessment Type:");
 
-        jLabel6.setText("Not Submitted");
+        SubmissionText.setText("Not Submitted");
 
-        jLabel7.setText("Not Graded");
+        GradeText.setText("Not Graded");
 
         TypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Internship", "Investigation Reports", "CP1", "CP2", "RMCP", "FYP" }));
 
@@ -117,8 +120,8 @@ public final class ReportSubmission extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addGap(83, 83, 83)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6)))
+                                    .addComponent(GradeText)
+                                    .addComponent(SubmissionText)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
@@ -141,11 +144,11 @@ public final class ReportSubmission extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel6))
+                    .addComponent(SubmissionText))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel7))
+                    .addComponent(GradeText))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -168,6 +171,12 @@ public final class ReportSubmission extends javax.swing.JFrame {
         )
         {public boolean isCellEditable(int row, int column){return false;}}
     );
+    AssessmentTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    AssessmentTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            AssessmentTableMouseClicked(evt);
+        }
+    });
     jScrollPane1.setViewportView(AssessmentTable);
 
     DeleteBtn.setText("Delete");
@@ -261,6 +270,23 @@ public final class ReportSubmission extends javax.swing.JFrame {
         RequestDate date = new RequestDate();
         date.setVisible(true);
     }//GEN-LAST:event_dateBtnActionPerformed
+
+    private void AssessmentTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AssessmentTableMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            JTable target = (JTable) evt.getSource();
+            int row = target.getSelectedRow();
+            if (row != -1) {
+                // Get the data from the selected row
+                String ID = (String) target.getValueAt(row, 0);
+
+                // Set the data to the label
+                SubmissionText.setText(ID);
+            }
+        }
+    }//GEN-LAST:event_AssessmentTableMouseClicked
+
+    
 
     private static void deleteLinesById(String filename, String id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -425,21 +451,23 @@ public final class ReportSubmission extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new ReportSubmission().setVisible(true);
         });
+
+        // Add mouse listener to the table
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
-    private javax.swing.JTable AssessmentTable;
+    private static javax.swing.JTable AssessmentTable;
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton DeleteBtn;
+    private static javax.swing.JLabel GradeText;
+    private static javax.swing.JLabel SubmissionText;
     private javax.swing.JComboBox<String> TypeBox;
     private javax.swing.JButton dateBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
