@@ -215,6 +215,8 @@ public class ReportPage extends javax.swing.JFrame {
         writeFeedbackToFile(rowData, selectedGrade, feedback);
         updateStatusInFile(rowData[1], selectedGrade); // Student ID
 
+        reportTable.setValueAt("Graded", selectedRow, 5);
+
         JOptionPane.showMessageDialog(this, "Grade and feedback successfully submitted!");
     }//GEN-LAST:event_submitBtnActionPerformed
 
