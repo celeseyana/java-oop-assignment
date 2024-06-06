@@ -44,7 +44,6 @@ public final class ReportSubmission extends javax.swing.JFrame {
         globalid = new ArrayList<>();
         globaltype = new ArrayList<>();
         populateTable(StudentData.usernameToDelete);
-//        System.out.println("Discrepancies deleted successfully.");
     }
 
     /**

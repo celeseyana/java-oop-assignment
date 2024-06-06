@@ -241,7 +241,6 @@ public class Login extends javax.swing.JFrame {
             homepage.setVisible(true);
             Login.this.setVisible(false);
 
-            // insert lecturer class here
         } else if (username.equals("Admin") && (password.equals("Admin123"))) {
             JOptionPane.showMessageDialog(Login.this, "Welcome back, " + username);
             Admin admin = new Admin();
