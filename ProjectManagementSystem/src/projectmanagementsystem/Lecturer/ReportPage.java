@@ -226,7 +226,7 @@ public class ReportPage extends javax.swing.JFrame {
 
     private void viewReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewReportActionPerformed
         // TODO add your handling code here:
-        // Get the selected row index
+        // Get the selected row 
         int selectedRow = reportTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a report to view.");
@@ -321,7 +321,7 @@ public class ReportPage extends javax.swing.JFrame {
     }
 
     private void setGradeBoxValues() {
-        GradeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A", "B+", "B", "C+", "C", "C-", "D", "FAIL", "Not Graded" }));
+        GradeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A", "B+", "B", "C+", "C", "C-", "D", "FAIL" }));
     }    
     
     
